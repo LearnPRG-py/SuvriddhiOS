@@ -5,12 +5,12 @@
 ################################################################################
 
 # keep QBEE_AGENT_COMMIT_ID in sync when updating
-QBEE_AGENT_VERSION = 2024.50
+QBEE_AGENT_VERSION = 2026.19
 QBEE_AGENT_SITE = $(call github,qbee-io,qbee-agent,$(QBEE_AGENT_VERSION))
 QBEE_AGENT_LICENSE = Apache-2.0
 QBEE_AGENT_LICENSE_FILES = LICENSE
 
-QBEE_AGENT_COMMIT_ID = 4303465d155f0680968b57fdf4421971786356a4
+QBEE_AGENT_COMMIT_ID = 99a0b5a56bb0ae2d7dec29abcf25d29be16f2c36
 
 QBEE_AGENT_GOMOD = go.qbee.io/agent
 
