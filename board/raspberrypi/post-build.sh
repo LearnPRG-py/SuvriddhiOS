@@ -62,7 +62,7 @@ else
 fi
 
 MAKE_EXTRA_CXXFLAGS="--sysroot=$SYSROOT -I$SYSROOT/usr/include"
-MAKE_EXTRA_LDFLAGS="--sysroot=$SYSROOT -L$SYSROOT/usr/lib"
+MAKE_EXTRA_LDFLAGS="--sysroot=$SYSROOT -L$SYSROOT/usr/lib -lssl -lcrypto"
 
 make clean
 make \
