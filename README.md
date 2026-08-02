@@ -1,2 +1,2 @@
 # SuvriddhiOS
-Migrated to LearnPRG-py/SuvriddhiOS to have repo settings access. Thanks!
+This is the new primary suvriddhi OS repo post migration (needed repo settings access).
