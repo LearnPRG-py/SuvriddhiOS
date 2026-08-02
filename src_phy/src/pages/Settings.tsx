@@ -136,10 +136,12 @@ export default function Settings() {
                 )}
             </div>
 
-            <h2 className="text-lg font-semibold mt-8 mb-4">Contact Information</h2>
+            <h2 className="text-lg font-semibold mt-8 mb-4">
+                Contact Information
+            </h2>
             <p className="text-slate-400 text-sm">
                 For support, please contact us at{" "}
-                
+                <a
                     href="mailto:suvriddhios@gmail.com"
                     className="text-blue-400 hover:text-blue-300 underline"
                 >
