@@ -136,6 +136,18 @@ export default function Settings() {
                 )}
             </div>
 
+            <h2 className="text-lg font-semibold mt-8 mb-4">Contact Information</h2>
+            <p className="text-slate-400 text-sm">
+                For support, please contact us at{" "}
+                
+                    href="mailto:suvriddhios@gmail.com"
+                    className="text-blue-400 hover:text-blue-300 underline"
+                >
+                    suvriddhios@gmail.com
+                </a>{" "}
+                or +91 79751 94530.
+            </p>
+
             <a
                 href="/"
                 className="fixed bottom-6 left-6 text-slate-200 hover:text-white rounded-lg p-2.5 flex items-center justify-center"
