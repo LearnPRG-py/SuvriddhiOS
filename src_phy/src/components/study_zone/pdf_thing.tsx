@@ -4,7 +4,7 @@ import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
-
+/*
 const STYLES = `
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,600;1,300&display=swap');
 
@@ -149,8 +149,10 @@ body {
   box-shadow: 0 4px 24px rgba(0,0,0,0.5);
 }
 `;
+*/
 
 export default function LearnPage() {
+    /*
     const [pdf, setPdf] = useState<string | null>(null);
     const [numPages, setNumPages] = useState<number>(0);
     const [pageNumber, setPageNumber] = useState<number>(1);
@@ -355,5 +357,45 @@ export default function LearnPage() {
                 </a>
             </div>
         </>
+    );
+    */
+    return (
+        <div className="w-screen h-screen flex flex-col justify-center items-center gap-3 text-center px-6">
+            <h1 className="text-4xl font-semibold text-white">Coming Soon</h1>
+            <p className="text-slate-400 text-lg">
+                The feature to access books will be coming soon via an update!
+            </p>
+            <p className="text-slate-400 text-lg">
+                Go to the settings page to update your device!
+            </p>
+
+            <a
+                href="/"
+                data-discover="true"
+                style={{
+                    position: "fixed",
+                    bottom: 16,
+                    right: 16,
+                    zIndex: 50,
+                    display: "inline-flex",
+                }}
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                >
+                    <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
+                    <path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                </svg>
+            </a>
+        </div>
     );
 }
