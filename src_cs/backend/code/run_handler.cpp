@@ -9,6 +9,16 @@ using json = nlohmann::json;
 int HandleRun(struct mg_connection *conn, void *)
 {
 	json req = GetJsonReq(conn);
+	if (!req.is_object() || !req.contains("token") || !req["token"].is_string()) {
+		json res = { { "success", false },
+			     { "input", nullptr },
+			     { "expected", nullptr },
+			     { "output", nullptr },
+			     { "error", "A valid compile token is required" } };
+		SendResponse(conn, res.dump());
+		return 200;
+	}
+
 	std::string token = req["token"];
 	std::string exePath = "/tmp/" + token;
 	if (!FileExists(exePath)) {

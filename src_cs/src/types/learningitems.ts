@@ -7,7 +7,7 @@ export interface BaseItem {
 }
 
 export interface Test {
-    input: string;
+    input?: string | string[];
     expected: string;
 }
 
@@ -20,7 +20,7 @@ export interface LessonItem extends BaseItem {
 
 export interface ExerciseItem extends BaseItem {
     type: "exercise";
-    contentFile: string;
+    contentFile?: string;
     tests: Test[];
 }
 

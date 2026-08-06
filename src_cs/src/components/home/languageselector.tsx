@@ -3,19 +3,15 @@ import type { LanguageType } from "../../types/language";
 interface LanguageSelectorProps {
     language: LanguageType;
     setLanguage: (lang: LanguageType) => void;
-    newUser: boolean;
 }
 
 export default function LanguageSelector({
     language,
     setLanguage,
-    newUser,
 }: LanguageSelectorProps) {
     return (
-        <div
-            className={`flex items-center ${newUser ? "justify-center" : ""} mt-6 gap-4 rounded-lg bg-background p-1`}
-        >
-            {(["C", "Python"] as const).map((lang) => (
+        <div className="flex items-center mt-6 gap-4 rounded-lg bg-background p-1">
+            {([/* "C", */ "Python"] as const).map((lang) => (
                 <button
                     key={lang}
                     onClick={() => setLanguage(lang)}

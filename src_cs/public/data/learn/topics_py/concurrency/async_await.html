@@ -152,7 +152,11 @@ time.sleep(2)</code></pre>
 
     <div class="code-block">
 <pre><code>import asyncio
-await asyncio.sleep(2)</code></pre>
+
+async def main():
+    await asyncio.sleep(2)
+
+asyncio.run(main())</code></pre>
     </div>
 
     <p>
@@ -162,7 +166,7 @@ await asyncio.sleep(2)</code></pre>
 
     <div class="callout">
       <div style="font-weight:700; color:var(--color-primary);">Very Important</div>
-      <div>You can only use <span class="inline-code">await</span> inside an <span class="inline-code">async def</span> function.</div>
+      <div>In a normal Python script, use <span class="inline-code">await</span> inside an <span class="inline-code">async def</span> function. Some interactive environments also support top-level <span class="inline-code">await</span>.</div>
     </div>
 
   </section>

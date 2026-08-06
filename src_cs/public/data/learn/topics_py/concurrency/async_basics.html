@@ -182,7 +182,7 @@ asyncio.run(say_hello())</code></pre>
 
     <div class="callout">
       <div style="font-weight:700; color:var(--color-primary);">Tip</div>
-      <div>Remember: you must use <span class="inline-code">asyncio.run()</span> to run async functions.</div>
+      <div>In a normal Python script, <span class="inline-code">asyncio.run()</span> is the usual way to run a top-level async function. Inside another async function, use <span class="inline-code">await</span> instead.</div>
     </div>
   </section>
 

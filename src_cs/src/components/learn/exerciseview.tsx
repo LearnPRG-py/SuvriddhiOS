@@ -10,7 +10,11 @@ import "ace-builds/src-noconflict/theme-tomorrow_night_eighties";
 import "ace-builds/src-noconflict/ext-language_tools";
 
 interface ExerciseTest {
+<<<<<<< HEAD
+    input?: string | string[];
+=======
     input: string;
+>>>>>>> 38e3240ab3587eb52f677570c1ad2cfc5b8ed125
     expected: string;
 }
 
@@ -54,8 +58,12 @@ export default function ExerciseView({ item, onMarkComplete }: Props) {
     const [draftLoaded, setDraftLoaded] = useState(false);
     const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
 
+<<<<<<< HEAD
+    const [hintIndex, setHintIndex] = useState(0);
+=======
     const [showHints, setShowHints] = useState(false);
     const [showWarnings, setShowWarnings] = useState(false);
+>>>>>>> 38e3240ab3587eb52f677570c1ad2cfc5b8ed125
 
     const editorRef = useRef<AceEditor>(null);
 
@@ -72,8 +80,20 @@ export default function ExerciseView({ item, onMarkComplete }: Props) {
                 }
 
                 setExercise(data);
+<<<<<<< HEAD
+                setCompletedTasks(new Array(data.tasks.length).fill(false));
+
+                const savedTaskIndex = localStorage.getItem(
+                    `exercise-task-${item.id}`,
+                );
+                const taskIdx = savedTaskIndex
+                    ? parseInt(savedTaskIndex, 10)
+                    : 0;
+                setTaskIndex(taskIdx);
+=======
                 setTaskIndex(0);
                 setCompletedTasks(new Array(data.tasks.length).fill(false));
+>>>>>>> 38e3240ab3587eb52f677570c1ad2cfc5b8ed125
             } catch (err) {
                 console.error(err);
                 setExercise(null);
@@ -85,6 +105,52 @@ export default function ExerciseView({ item, onMarkComplete }: Props) {
 
     useEffect(() => {
         if (!exercise) return;
+<<<<<<< HEAD
+
+        const draft = getDraftForExercise(item.id);
+
+        setCode(draft ?? exercise.starterCode);
+        setDraftLoaded(true);
+    }, [exercise, item.id]);
+
+    useEffect(() => {
+        if (!draftLoaded) return;
+
+        saveDraftForExercise(item.id, code);
+    }, [code, draftLoaded]);
+
+    useEffect(() => {
+        editorRef.current?.editor.focus();
+        setHintIndex(0);
+    }, [item.id, taskIndex]);
+
+    useEffect(() => {
+        if (exercise) {
+            localStorage.setItem(
+                `exercise-task-${item.id}`,
+                taskIndex.toString(),
+            );
+        }
+    }, [taskIndex, exercise, item.id]);
+
+    if (!exercise) {
+        return (
+            <div className="flex-1 flex items-center justify-center">
+                Loading exercise...
+            </div>
+        );
+    }
+
+    const task = exercise.tasks[taskIndex];
+
+    const nextUnlockedIndex = completedTasks.findIndex((done) => !done);
+    const maxUnlockedIndex =
+        nextUnlockedIndex === -1
+            ? exercise.tasks.length - 1
+            : nextUnlockedIndex;
+    const isTaskUnlocked = (index: number) => index <= maxUnlockedIndex;
+=======
+>>>>>>> 38e3240ab3587eb52f677570c1ad2cfc5b8ed125
 
         const draft = getDraftForExercise(item.id);
 
@@ -138,14 +204,19 @@ export default function ExerciseView({ item, onMarkComplete }: Props) {
         setIsSuccess(null);
 
         try {
+<<<<<<< HEAD
+=======
             // const currentTask = exercise.tasks[taskIndex];
 
+>>>>>>> 38e3240ab3587eb52f677570c1ad2cfc5b8ed125
             const endpoint =
                 language === "Python"
                     ? "http://127.0.0.1:8000/api/python"
                     : "http://127.0.0.1:8000/api/compile";
 
             if (language === "Python") {
+<<<<<<< HEAD
+=======
                 console.log(task.tests);
                 console.log(
                     JSON.stringify(
@@ -157,6 +228,7 @@ export default function ExerciseView({ item, onMarkComplete }: Props) {
                         2,
                     ),
                 );
+>>>>>>> 38e3240ab3587eb52f677570c1ad2cfc5b8ed125
                 const res = await fetch(endpoint, {
                     method: "POST",
                     headers: {
@@ -182,12 +254,25 @@ export default function ExerciseView({ item, onMarkComplete }: Props) {
 
                     if (taskIndex === exercise.tasks.length - 1) {
                         onMarkComplete();
+<<<<<<< HEAD
+                    } else {
+                        setTaskIndex(taskIndex + 1);
+=======
+>>>>>>> 38e3240ab3587eb52f677570c1ad2cfc5b8ed125
                     }
 
                     return;
                 }
 
                 setIsSuccess(false);
+<<<<<<< HEAD
+                setOutput(
+                    `❌ Test Failed
+
+Output:
+${json.output}
+
+=======
 
                 setOutput(
                     `❌ Test Failed
@@ -195,6 +280,7 @@ export default function ExerciseView({ item, onMarkComplete }: Props) {
 Output:
 ${json.output}
 
+>>>>>>> 38e3240ab3587eb52f677570c1ad2cfc5b8ed125
 Expected:
 ${json.expected}`,
                 );
@@ -241,10 +327,18 @@ ${json.expected}`,
 
                     if (taskIndex === exercise.tasks.length - 1) {
                         onMarkComplete();
+<<<<<<< HEAD
+                    } else {
+                        setTaskIndex(taskIndex + 1);
+                    }
+                } else {
+                    setIsSuccess(false);
+=======
                     }
                 } else {
                     setIsSuccess(false);
 
+>>>>>>> 38e3240ab3587eb52f677570c1ad2cfc5b8ed125
                     setOutput(
                         `❌ Test Failed
 
@@ -264,6 +358,86 @@ ${runJson.expected}`,
         }
     }
     return (
+<<<<<<< HEAD
+        <div className="grow overflow-y-auto p-6">
+            <div className="mx-auto max-w-4xl">
+                {/* Header */}
+                <div className="mb-8">
+                    <h1 className="text-3xl font-bold mb-2">
+                        {exercise.title}
+                    </h1>
+                    <p className="text-lg text-muted-foreground">
+                        {exercise.lead}
+                    </p>
+                </div>
+
+                {/* Task Selection */}
+                <div className="mb-8 flex flex-wrap gap-2">
+                    {exercise.tasks.map((t, i) => (
+                        <button
+                            key={t.taskId}
+                            onClick={() => isTaskUnlocked(i) && setTaskIndex(i)}
+                            disabled={!isTaskUnlocked(i)}
+                            className={`rounded-lg px-4 py-2 text-sm font-medium transition-all ${
+                                i === taskIndex
+                                    ? "bg-primary text-white shadow-[0_8px_30px_rgba(142,124,195,0.25)]"
+                                    : completedTasks[i]
+                                      ? "bg-violet-700 text-white hover:bg-violet-600"
+                                      : isTaskUnlocked(i)
+                                        ? "bg-secondary text-foreground hover:bg-secondary/80"
+                                        : "bg-secondary text-muted-foreground cursor-not-allowed opacity-50"
+                            }`}
+                        >
+                            {completedTasks[i] ? "✓ " : ""}
+                            {t.title}
+                        </button>
+                    ))}
+                </div>
+
+                {/* Task Content */}
+                <div className="space-y-6 mb-8">
+                    <section>
+                        <h2 className="text-2xl font-semibold mb-3">
+                            {task.title}
+                        </h2>
+                        <p className="text-sm text-muted-foreground mb-2">
+                            Task {taskIndex + 1} of {exercise.tasks.length}
+                            {task.difficulty && ` • ${task.difficulty}`}
+                        </p>
+                        <p className="text-foreground leading-7">
+                            {task.background}
+                        </p>
+                    </section>
+
+                    {task.backgroundCode && (
+                        <section>
+                            <h3 className="text-lg font-semibold mb-3">
+                                Example
+                            </h3>
+                            <pre className="bg-card p-4 rounded-lg overflow-x-auto text-sm text-foreground border border-border">
+                                {task.backgroundCode}
+                            </pre>
+                        </section>
+                    )}
+
+                    {task.backgroundCodeOutput && (
+                        <section>
+                            <h3 className="text-lg font-semibold mb-3">
+                                Expected Output
+                            </h3>
+                            <pre className="bg-card p-4 rounded-lg overflow-auto text-sm text-primary border border-border break-words whitespace-pre-wrap">
+                                {task.backgroundCodeOutput}
+                            </pre>
+                        </section>
+                    )}
+
+                    {task.instructions.length > 0 && (
+                        <section>
+                            <h3 className="text-lg font-semibold mb-3">
+                                Instructions
+                            </h3>
+                            <div className="space-y-2">
+=======
         <div className="grow overflow-y-auto p-8">
             <div className="mx-auto max-w-6xl flex flex-col gap-8">
                 {/* Header */}
@@ -351,6 +525,7 @@ ${runJson.expected}`,
                             </h3>
 
                             <div className="space-y-3">
+>>>>>>> 38e3240ab3587eb52f677570c1ad2cfc5b8ed125
                                 {task.instructions.map((instruction, i) => (
                                     <label
                                         key={i}
@@ -358,14 +533,111 @@ ${runJson.expected}`,
                                     >
                                         <input
                                             type="checkbox"
+<<<<<<< HEAD
+                                            className="mt-1 accent-primary"
+                                        />
+                                        <span className="text-foreground">
+                                            {instruction}
+                                        </span>
+=======
                                             className="mt-1"
                                         />
 
                                         <span>{instruction}</span>
+>>>>>>> 38e3240ab3587eb52f677570c1ad2cfc5b8ed125
                                     </label>
                                 ))}
                             </div>
                         </section>
+<<<<<<< HEAD
+                    )}
+
+                    {task.hints.length > 0 && (
+                        <section>
+                            <h3 className="text-lg font-semibold mb-3">
+                                💡 Hints
+                            </h3>
+                            <div className="space-y-3">
+                                {hintIndex > 0 && (
+                                    <div className="space-y-2">
+                                        {task.hints
+                                            .slice(0, hintIndex)
+                                            .map((hint, i) => (
+                                                <div
+                                                    key={i}
+                                                    className="bg-card p-4 rounded-lg border border-border"
+                                                >
+                                                    <p className="text-sm text-muted-foreground mb-1">
+                                                        Hint {i + 1}
+                                                    </p>
+                                                    <p className="text-foreground">
+                                                        {hint}
+                                                    </p>
+                                                </div>
+                                            ))}
+                                    </div>
+                                )}
+                                <button
+                                    onClick={() => setHintIndex(hintIndex + 1)}
+                                    disabled={hintIndex >= task.hints.length}
+                                    className="px-4 py-2 rounded-lg bg-primary text-primary-foreground hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
+                                >
+                                    {hintIndex >= task.hints.length
+                                        ? "No more hints"
+                                        : `Show Next Hint (${hintIndex + 1}/${task.hints.length})`}
+                                </button>
+                            </div>
+                        </section>
+                    )}
+
+                    {task.warnings.length > 0 && (
+                        <section>
+                            <h3 className="text-lg font-semibold mb-3">
+                                ⚠ Warnings
+                            </h3>
+                            <ul className="space-y-2 list-disc ml-4 text-foreground">
+                                {task.warnings.map((warning, i) => (
+                                    <li key={i}>{warning}</li>
+                                ))}
+                            </ul>
+                        </section>
+                    )}
+                </div>
+
+                {/* Code Editor Section */}
+                <div className="mb-8">
+                    <h3 className="text-lg font-semibold mb-3">
+                        Your Solution
+                    </h3>
+                    <div className="rounded-lg border border-border bg-card overflow-hidden">
+                        <AceEditor
+                            ref={editorRef}
+                            mode={language === "Python" ? "python" : "c_cpp"}
+                            theme="tomorrow_night_eighties"
+                            width="100%"
+                            height="320px"
+                            value={code}
+                            onChange={setCode}
+                            showPrintMargin={false}
+                            setOptions={{
+                                useWorker: false,
+                                tabSize: 4,
+                            }}
+                        />
+                    </div>
+
+                    <div className="mt-4 flex flex-wrap gap-3">
+                        <button
+                            onClick={handleSubmit}
+                            disabled={running}
+                            className="rounded-lg bg-primary px-4 py-2 font-medium text-primary-foreground hover:opacity-90 disabled:opacity-50"
+                        >
+                            {running ? "Running..." : "Test"}
+                        </button>
+                        <button
+                            onClick={() => setCode(exercise.starterCode)}
+                            className="rounded-lg border border-border px-4 py-2 hover:bg-secondary transition-colors"
+=======
 
                         {/* Hints */}
 
@@ -457,6 +729,7 @@ ${runJson.expected}`,
                         <button
                             onClick={() => setCode(exercise.starterCode)}
                             className="rounded-lg border border-zinc-700 px-5 py-3"
+>>>>>>> 38e3240ab3587eb52f677570c1ad2cfc5b8ed125
                         >
                             Reset
                         </button>
@@ -466,6 +739,8 @@ ${runJson.expected}`,
                         <OutputFeedback output={output} isSuccess={isSuccess} />
                     </div>
                 </div>
+<<<<<<< HEAD
+=======
 
                 {/* Navigation */}
 
@@ -490,6 +765,7 @@ ${runJson.expected}`,
                         </button>
                     ))}
                 </div>
+>>>>>>> 38e3240ab3587eb52f677570c1ad2cfc5b8ed125
             </div>
         </div>
     );

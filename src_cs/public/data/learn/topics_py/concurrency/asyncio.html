@@ -152,10 +152,11 @@ asyncio.run(main())</code></pre>
         <p><strong>Using gather:</strong></p>
 
         <div class="code-block">
-            <pre><code>await asyncio.gather(
-    download("A", 2),
-    download("B", 1)
-)</code></pre>
+            <pre><code>async def main():
+    await asyncio.gather(
+        download("A", 2),
+        download("B", 1)
+    )</code></pre>
         </div>
 
         <p>
@@ -166,8 +167,9 @@ asyncio.run(main())</code></pre>
         <p><strong>Using create_task:</strong></p>
 
         <div class="code-block">
-            <pre><code>task = asyncio.create_task(download("A", 2))
-await task</code></pre>
+            <pre><code>async def main():
+    task = asyncio.create_task(download("A", 2))
+    await task</code></pre>
         </div>
 
         <p>
