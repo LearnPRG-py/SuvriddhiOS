@@ -8,8 +8,7 @@ int HandleCompile(struct mg_connection *conn, void *)
 {
 	json req = GetJsonReq(conn);
 	if (!req.is_object() || !req.contains("code") || !req["code"].is_string()) {
-		json res = { { "token", nullptr },
-			     { "error", "A source-code string is required" } };
+		json res = { { "token", nullptr }, { "error", "A source-code string is required" } };
 		SendResponse(conn, res.dump());
 		return 200;
 	}

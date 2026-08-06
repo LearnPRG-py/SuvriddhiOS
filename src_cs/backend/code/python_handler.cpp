@@ -35,14 +35,7 @@ int HandlePython(struct mg_connection *conn, void *)
 	WriteFile(path, code);
 	json res = RunTests(tests, token, Language::kPython);
 	std::filesystem::remove(path);
-	std::string token = GenerateToken(16);
-	std::string path = "/tmp/" + token + ".py";
-
-	WriteFile(path, code);
-	json res = RunTests(tests, token, Language::kPython);
-	std::filesystem::remove(path);
 	SendResponse(conn, res.dump());
-
 
 	return 200;
 }
