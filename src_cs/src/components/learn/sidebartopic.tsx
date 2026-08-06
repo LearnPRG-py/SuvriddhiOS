@@ -12,8 +12,14 @@ interface SidebarTopicProps {
     topicProgress: number;
 }
 
-export default function SidebarTopic({ topic, expanded, onToggle, activeItemId, onOpenItem, topicProgress } : SidebarTopicProps) {
-
+export default function SidebarTopic({
+    topic,
+    expanded,
+    onToggle,
+    activeItemId,
+    onOpenItem,
+    topicProgress,
+}: SidebarTopicProps) {
     const { completed } = useStore();
 
     return (
@@ -27,28 +33,42 @@ export default function SidebarTopic({ topic, expanded, onToggle, activeItemId, 
                         <ProgressRing progress={topicProgress} />
                     </div>
                     <div className="text-left">
-                        <div className="text-sm font-semibold">{topic.title}</div>
-                        <div className="text-xs text-muted-foreground">{topic.items.length} items</div>
+                        <div className="text-sm font-semibold">
+                            {topic.title}
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                            {topic.items.length} items
+                        </div>
                     </div>
                 </div>
                 <div className="flex items-center ml-4 gap-3">
-                    <ChevronDown className={`transition-transform ${expanded ? "rotate-180" : ""}`} />
+                    <ChevronDown
+                        className={`transition-transform ${expanded ? "rotate-180" : ""}`}
+                    />
                 </div>
             </button>
-
 
             {expanded && (
                 <div className="mt-2 ml-6">
                     {topic.items.map((it: TopicItem) => (
-                        <div key={it.id} className="flex items-center justify-between py-2">
+                        <div
+                            key={it.id}
+                            className="flex items-center justify-between py-2"
+                        >
                             <button
                                 onClick={() => onOpenItem(topic.id, it.id)}
-                                className={`text-left w-full hover:text-primary flex text-sm items-center gap-3 ${activeItemId === it.id ? "text-primary" : ""}`}
+                                className={`text-left w-full hover:text-primary flex flex-wrap text-sm items-start gap-3 ${activeItemId === it.id ? "text-primary" : ""}`}
                             >
-                                <span className="w-3 mr-2 inline-block">
-                                    {it.type === "lesson" ? <Book size={16} /> : <Code2 size={16} />}
+                                <span className="flex-shrink-0 mt-1 w-3 mr-2 inline-block">
+                                    {it.type === "lesson" ? (
+                                        <Book size={16} />
+                                    ) : (
+                                        <Code2 size={16} />
+                                    )}
                                 </span>
-                                <span className="truncate flex-1">{it.title}</span>
+                                <span className="flex-1 break-words">
+                                    {it.title}
+                                </span>
                             </button>
                             {Object.hasOwn(completed, it.id) && (
                                 <span className="ml-2 text-primary">

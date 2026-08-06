@@ -54,20 +54,17 @@
             {
                 "id": "found_ex_execution_trace",
                 "type": "exercise",
-                "title": "Exercise: Trace the Execution Model",
-                "contentFile": "topics_py/foundations/ex_execution_trace.html"
+                "title": "Exercise: Trace the Execution Model"
             },
             {
                 "id": "challenge_found_001",
                 "type": "challenge",
-                "title": "Incident #001 — Conference Check-in Terminal",
-                "contentFile": "topics_py/foundations/challenge_found_001.html"
+                "title": "Incident #001 — Conference Check-in Terminal"
             },
             {
                 "id": "challenge_found_002",
                 "type": "challenge",
-                "title": "Incident #002 — Coffee Shop Receipt Generator",
-                "contentFile": "topics_py/foundations/challenge_found_002.html"
+                "title": "Incident #002 — Coffee Shop Receipt Generator"
             },
             {
                 "id": "found_quiz",
@@ -144,14 +141,12 @@
             {
                 "id": "challenge_types_001",
                 "type": "challenge",
-                "title": "Incident #018 — Password Security Audit",
-                "contentFile": "topics_py/core_data_types/challenge_types_001.html"
+                "title": "Incident #018 — Password Security Audit"
             },
             {
                 "id": "challenge_types_002",
                 "type": "challenge",
-                "title": "Incident #027 — Faulty Temperature Sensor",
-                "contentFile": "topics_py/core_data_types/challenge_types_002.html"
+                "title": "Incident #027 — Faulty Temperature Sensor"
             },
             {
                 "id": "types_quiz",
@@ -228,14 +223,12 @@
             {
                 "id": "challenge_control_001",
                 "type": "challenge",
-                "title": "Incident #051 — Smart Parking Garage",
-                "contentFile": "topics_py/control_flow/challenge_control_001.html"
+                "title": "Incident #051 — Smart Parking Garage"
             },
             {
                 "id": "challenge_control_002",
                 "type": "challenge",
-                "title": "Incident #063 — Elevator Dispatch System",
-                "contentFile": "topics_py/control_flow/challenge_control_002.html"
+                "title": "Incident #063 — Elevator Dispatch System"
             },
             {
                 "id": "control_quiz",
@@ -306,20 +299,17 @@
             {
                 "id": "func_ex_lambda_scope",
                 "type": "exercise",
-                "title": "Exercise: Lambda, Scope & Docstring Drills",
-                "contentFile": "topics_py/functions/ex_lambda_scope.html"
+                "title": "Exercise: Lambda, Scope & Docstring Drills"
             },
             {
                 "id": "challenge_func_001",
                 "type": "challenge",
-                "title": "Incident #084 — E-Commerce Pricing Engine",
-                "contentFile": "topics_py/functions/challenge_func_001.html"
+                "title": "Incident #084 — E-Commerce Pricing Engine"
             },
             {
                 "id": "challenge_func_002",
                 "type": "challenge",
-                "title": "Incident #097 — Company Folder Size Analyzer",
-                "contentFile": "topics_py/functions/challenge_func_002.html"
+                "title": "Incident #097 — Company Folder Size Analyzer"
             },
             {
                 "id": "func_quiz",
@@ -349,7 +339,7 @@
                 "id": "ds_list_comprehensions",
                 "type": "lesson",
                 "title": "List Comprehensions",
-                "contentFile": "topics_py/data_structures/list_comprehensions.html"
+                "contentFile": "topics_py/data_structures/lists_comprehensions.html"
             },
             {
                 "id": "ds_tuples",
@@ -414,20 +404,17 @@
             {
                 "id": "ds_ex_choosing_structures",
                 "type": "exercise",
-                "title": "Exercise: Pick the Right Structure & Estimate Complexity",
-                "contentFile": "topics_py/data_structures/ex_choosing_structures.html"
+                "title": "Exercise: Pick the Right Structure & Estimate Complexity"
             },
             {
                 "id": "challenge_ds_001",
                 "type": "challenge",
-                "title": "Incident #112 — Music Streaming Analytics Failure",
-                "contentFile": "topics_py/data_structures/challenge_ds_001.html"
+                "title": "Incident #112 — Music Streaming Analytics Failure"
             },
             {
                 "id": "challenge_ds_002",
                 "type": "challenge",
-                "title": "Incident #128 — Warehouse Inventory Merge",
-                "contentFile": "topics_py/data_structures/challenge_ds_002.html"
+                "title": "Incident #128 — Warehouse Inventory Merge"
             },
             {
                 "id": "ds_quiz",
@@ -504,20 +491,17 @@
             {
                 "id": "file_ex_pathlib_pipeline",
                 "type": "exercise",
-                "title": "Exercise: pathlib Batch-Processing Pipeline",
-                "contentFile": "topics_py/file_handling/ex_pathlib_pipeline.html"
+                "title": "Exercise: pathlib Batch-Processing Pipeline"
             },
             {
                 "id": "challenge_file_001",
                 "type": "challenge",
-                "title": "Incident #141 — Corrupted Student Grade Archive",
-                "contentFile": "topics_py/file_handling/challenge_file_001.html"
+                "title": "Incident #141 — Corrupted Student Grade Archive"
             },
             {
                 "id": "challenge_file_002",
                 "type": "challenge",
-                "title": "Incident #156 — Customer Backup Recovery",
-                "contentFile": "topics_py/file_handling/challenge_file_002.html"
+                "title": "Incident #156 — Customer Backup Recovery"
             },
             {
                 "id": "file_quiz",
@@ -582,20 +566,17 @@
             {
                 "id": "err_ex_custom_logging",
                 "type": "exercise",
-                "title": "Exercise: Custom Exceptions with Logging",
-                "contentFile": "topics_py/error_handling/ex_custom_logging.html"
+                "title": "Exercise: Custom Exceptions with Logging"
             },
             {
                 "id": "challenge_error_001",
                 "type": "challenge",
-                "title": "Incident #173 — ATM Transaction Failure",
-                "contentFile": "topics_py/error_handling/challenge_error_001.html"
+                "title": "Incident #173 — ATM Transaction Failure"
             },
             {
                 "id": "challenge_error_002",
                 "type": "challenge",
-                "title": "Incident #189 — Broken Configuration Loader",
-                "contentFile": "topics_py/error_handling/challenge_error_002.html"
+                "title": "Incident #189 — Broken Configuration Loader"
             },
             {
                 "id": "err_quiz",
@@ -704,20 +685,17 @@
             {
                 "id": "oop_ex_dataclass_enum",
                 "type": "exercise",
-                "title": "Exercise: Dataclasses & Enums in Practice",
-                "contentFile": "topics_py/oop/ex_dataclass_enum.html"
+                "title": "Exercise: Dataclasses & Enums in Practice"
             },
             {
                 "id": "challenge_oop_001",
                 "type": "challenge",
-                "title": "Incident #203 — Hospital Patient Management System",
-                "contentFile": "topics_py/oop/challenge_oop_001.html"
+                "title": "Incident #203 — Hospital Patient Management System"
             },
             {
                 "id": "challenge_oop_002",
                 "type": "challenge",
-                "title": "Incident #224 — Warehouse Robot Fleet",
-                "contentFile": "topics_py/oop/challenge_oop_002.html"
+                "title": "Incident #224 — Warehouse Robot Fleet"
             },
             {
                 "id": "oop_quiz",
@@ -806,20 +784,17 @@
             {
                 "id": "mod_ex_pyproject_setup",
                 "type": "exercise",
-                "title": "Exercise: Configure a Package with pyproject.toml",
-                "contentFile": "topics_py/modules_project_structure/ex_pyproject_setup.html"
+                "title": "Exercise: Configure a Package with pyproject.toml"
             },
             {
                 "id": "challenge_modules_001",
                 "type": "challenge",
-                "title": "Incident #241 — The Monolithic Utility Script",
-                "contentFile": "topics_py/modules_project_structure/challenge_modules_001.html"
+                "title": "Incident #241 — The Monolithic Utility Script"
             },
             {
                 "id": "challenge_modules_002",
                 "type": "challenge",
-                "title": "Incident #259 — Broken Developer Environment",
-                "contentFile": "topics_py/modules_project_structure/challenge_modules_002.html"
+                "title": "Incident #259 — Broken Developer Environment"
             },
             {
                 "id": "mod_quiz",
@@ -867,7 +842,7 @@
                 "id": "int_static_typing",
                 "type": "lesson",
                 "title": "Static Type Checking (mypy conceptually)",
-                "contentFile": "topics_py/intermediate/static_typing.html"
+                "contentFile": "topics_py/intermediate/static_typic.html"
             },
             {
                 "id": "int_namedtuples",
@@ -902,14 +877,12 @@
             {
                 "id": "challenge_intermediate_001",
                 "type": "challenge",
-                "title": "Incident #301 — Infinite Log Stream",
-                "contentFile": "topics_py/intermediate_python/challenge_intermediate_001.html"
+                "title": "Incident #301 — Infinite Log Stream"
             },
             {
                 "id": "challenge_intermediate_002",
                 "type": "challenge",
-                "title": "Incident #327 — API Rate Limiter",
-                "contentFile": "topics_py/intermediate_python/challenge_intermediate_002.html"
+                "title": "Incident #327 — API Rate Limiter"
             },
             {
                 "id": "int_quiz",
@@ -974,8 +947,7 @@
             {
                 "id": "test_ex_mocking_practice",
                 "type": "exercise",
-                "title": "Exercise: Mock External Calls with pytest",
-                "contentFile": "topics_py/testing_code_quality/ex_mocking_practice.html"
+                "title": "Exercise: Mock External Calls with pytest"
             },
             {
                 "id": "test_ex_tdd_kata",
@@ -986,14 +958,12 @@
             {
                 "id": "challenge_testing_001",
                 "type": "challenge",
-                "title": "Incident #351 — Banking Interest Calculation Bug",
-                "contentFile": "topics_py/testing_code_quality/challenge_testing_001.html"
+                "title": "Incident #351 — Banking Interest Calculation Bug"
             },
             {
                 "id": "challenge_testing_002",
                 "type": "challenge",
-                "title": "Incident #372 — Unstable Weather Service",
-                "contentFile": "topics_py/testing_code_quality/challenge_testing_002.html"
+                "title": "Incident #372 — Unstable Weather Service"
             },
             {
                 "id": "test_quiz",
@@ -1058,20 +1028,17 @@
             {
                 "id": "conc_ex_asyncio_gather",
                 "type": "exercise",
-                "title": "Exercise: Concurrent Downloads with asyncio.gather",
-                "contentFile": "topics_py/concurrency_parallelism/ex_asyncio_gather.html"
+                "title": "Exercise: Concurrent Downloads with asyncio.gather"
             },
             {
                 "id": "challenge_concurrency_001",
                 "type": "challenge",
-                "title": "Incident #401 — Food Delivery Dispatch Meltdown",
-                "contentFile": "topics_py/concurrency_parallelism/challenge_concurrency_001.html"
+                "title": "Incident #401 — Food Delivery Dispatch Meltdown"
             },
             {
                 "id": "challenge_concurrency_002",
                 "type": "challenge",
-                "title": "Incident #428 — Satellite Image Processing Queue",
-                "contentFile": "topics_py/concurrency_parallelism/challenge_concurrency_002.html"
+                "title": "Incident #428 — Satellite Image Processing Queue"
             },
             {
                 "id": "conc_quiz",
@@ -1130,14 +1097,12 @@
             {
                 "id": "challenge_perf_001",
                 "type": "challenge",
-                "title": "Incident #452 — Search Engine Slowdown",
-                "contentFile": "topics_py/performance_optimization/challenge_perf_001.html"
+                "title": "Incident #452 — Search Engine Slowdown"
             },
             {
                 "id": "challenge_perf_002",
                 "type": "challenge",
-                "title": "Incident #479 — Social Media Feed Memory Leak",
-                "contentFile": "topics_py/performance_optimization/challenge_perf_002.html"
+                "title": "Incident #479 — Social Media Feed Memory Leak"
             },
             {
                 "id": "perf_quiz",
@@ -1196,14 +1161,12 @@
             {
                 "id": "challenge_system_001",
                 "type": "challenge",
-                "title": "Incident #503 — Downloads Folder Disaster",
-                "contentFile": "topics_py/system_interaction/challenge_system_001.html"
+                "title": "Incident #503 — Downloads Folder Disaster"
             },
             {
                 "id": "challenge_system_002",
                 "type": "challenge",
-                "title": "Incident #528 — Automated Deployment Pipeline",
-                "contentFile": "topics_py/system_interaction/challenge_system_002.html"
+                "title": "Incident #528 — Automated Deployment Pipeline"
             },
             {
                 "id": "sys_quiz",
@@ -1262,14 +1225,12 @@
             {
                 "id": "challenge_apps_001",
                 "type": "challenge",
-                "title": "Incident #601 — Weather Operations Dashboard Outage",
-                "contentFile": "topics_py/real_applications/challenge_apps_001.html"
+                "title": "Incident #601 — Weather Operations Dashboard Outage"
             },
             {
                 "id": "challenge_apps_002",
                 "type": "challenge",
-                "title": "Incident #624 — Restaurant Ordering Service Failure",
-                "contentFile": "topics_py/real_applications/challenge_apps_002.html"
+                "title": "Incident #624 — Restaurant Ordering Service Failure"
             },
             {
                 "id": "app_project_task_manager",
@@ -1322,14 +1283,12 @@
             {
                 "id": "challenge_ecosystem_001",
                 "type": "challenge",
-                "title": "Incident #701 — Disease Outbreak Analytics",
-                "contentFile": "topics_py/ecosystem_overview/challenge_ecosystem_001.html"
+                "title": "Incident #701 — Disease Outbreak Analytics"
             },
             {
                 "id": "challenge_ecosystem_002",
                 "type": "challenge",
-                "title": "Incident #728 — Release Engineering Crisis",
-                "contentFile": "topics_py/ecosystem_overview/challenge_ecosystem_002.html"
+                "title": "Incident #728 — Release Engineering Crisis"
             },
             {
                 "id": "eco_quiz",

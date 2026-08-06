@@ -53,7 +53,7 @@ std::string SanitizeFilename(const std::string &name)
 	if (!clean.empty())
 		return clean;
 	int num_of_files = std::distance(std::filesystem::directory_iterator(kSaveDir), std::filesystem::directory_iterator{});
-	std::string filename = "untitled" + std::to_string(num_of_files) + ".c";
+	std::string filename = "untitled" + std::to_string(num_of_files) + ".py";
 	return filename;
 }
 

@@ -1,1 +1,1 @@
-export type LanguageType = "Python" | "C" | "C++" | "Java";
+export type LanguageType = "Python" | "C" | "C++" | "Java" | "";

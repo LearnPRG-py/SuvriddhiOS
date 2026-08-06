@@ -13,6 +13,27 @@ std::string TrimTrailingWhitespace(std::string s)
 	size_t end = s.find_last_not_of(whitespaceChars);
 	return (end == std::string::npos) ? "" : s.substr(0, end + 1);
 }
+
+std::string TestInput(const json &test)
+{
+	const auto input = test.find("input");
+	if (input == test.end())
+		return "";
+	if (input->is_string())
+		return input->get<std::string>();
+	if (input->is_array()) {
+		std::string result;
+		for (const auto &line : *input) {
+			if (!line.is_string())
+				return "";
+			if (!result.empty())
+				result += '\n';
+			result += line.get<std::string>();
+		}
+		return result;
+	}
+	return "";
+}
 } // namespace
 
 json RunTests(json tests, std::string token, Language lang)
@@ -44,7 +65,7 @@ json RunTests(json tests, std::string token, Language lang)
 		}
 	} else {
 		for (auto &t : tests) {
-			std::string input = TrimTrailingWhitespace(t.value("input", ""));
+			std::string input = TrimTrailingWhitespace(TestInput(t));
 			std::string expected = TrimTrailingWhitespace(t.value("expected", ""));
 			lastInput = input;
 			lastExpected = expected;
