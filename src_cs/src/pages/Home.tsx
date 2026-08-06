@@ -5,8 +5,17 @@ import LanguageSelector from "../components/home/languageselector";
 import MenuCards from "../components/home/menucards";
 import RecentActivity from "../components/home/recentactivity";
 import type { Topic } from "../types/learningitems";
+import { Home as HomeIcon } from "lucide-react";
 
 export default function Home() {
+    const {
+        language,
+        setLanguage,
+        lastActivity,
+        setLastActivity,
+        markItemCompleted,
+        isItemCompleted,
+    } = useStore();
     const {
         language,
         setLanguage,
@@ -46,6 +55,17 @@ export default function Home() {
         }
     }, [lastActivity]);
 
+    useEffect(() => {
+        if (topics.length === 0) return;
+        const savedCompletedItems = localStorage.getItem("completedItems");
+        if (savedCompletedItems) {
+            const completedItems: { topicId: string; itemId: string }[] =
+                JSON.parse(savedCompletedItems);
+            completedItems.forEach((item) => {
+                if (!isItemCompleted(item.itemId))
+                    markItemCompleted(item.itemId);
+            });
+        }
     useEffect(() => {
         if (topics.length === 0) return;
         const savedCompletedItems = localStorage.getItem("completedItems");

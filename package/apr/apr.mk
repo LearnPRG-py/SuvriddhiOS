@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-APR_VERSION = 1.7.5
+APR_VERSION = 1.7.6
 APR_SOURCE = apr-$(APR_VERSION).tar.bz2
 APR_SITE = https://archive.apache.org/dist/apr
 APR_LICENSE = Apache-2.0
@@ -49,6 +49,10 @@ APR_CONF_ENV = \
 	apr_cv_accept4=yes \
 	apr_preload_done=yes
 APR_CONFIG_SCRIPTS = apr-1-config
+
+ifeq ($(BR2_HOST_GCC_AT_LEAST_14),)
+APR_CONF_ENV += ac_cv_prog_cc_c23=no
+endif
 
 # Doesn't even try to guess when cross compiling
 ifeq ($(BR2_TOOLCHAIN_HAS_THREADS),y)

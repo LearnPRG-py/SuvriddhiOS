@@ -13,6 +13,7 @@ std::string TrimTrailingWhitespace(std::string s)
 	size_t end = s.find_last_not_of(whitespaceChars);
 	return (end == std::string::npos) ? "" : s.substr(0, end + 1);
 }
+<<<<<<< HEAD
 
 std::string TestInput(const json &test)
 {
@@ -34,10 +35,13 @@ std::string TestInput(const json &test)
 	}
 	return "";
 }
+=======
+>>>>>>> 38e3240ab3587eb52f677570c1ad2cfc5b8ed125
 } // namespace
 
 json RunTests(json tests, std::string token, Language lang)
 {
+<<<<<<< HEAD
     std::string exePath = "/tmp/" + token + ((lang == Language::kC) ? ".c" : ".py");
 
     std::string lastInput;
@@ -48,6 +52,18 @@ json RunTests(json tests, std::string token, Language lang)
     std::string err;
 
     std::string tmp_out = "/tmp/" + token + ".out";
+=======
+	std::string exePath = "/tmp/" + token + ((lang == Language::kC) ? ".c" : ".py");
+
+	std::string lastInput;
+	std::string lastExpected;
+	std::string lastOutput;
+
+	bool success = true;
+	std::string err;
+
+	std::string tmp_out = "/tmp/" + token + ".out";
+>>>>>>> 38e3240ab3587eb52f677570c1ad2cfc5b8ed125
 
 	if (tests.empty()) {
 		std::string runCmd;
@@ -65,12 +81,17 @@ json RunTests(json tests, std::string token, Language lang)
 		}
 	} else {
 		for (auto &t : tests) {
+<<<<<<< HEAD
 			std::string input = TrimTrailingWhitespace(TestInput(t));
+=======
+			std::string input = TrimTrailingWhitespace(t.value("input", ""));
+>>>>>>> 38e3240ab3587eb52f677570c1ad2cfc5b8ed125
 			std::string expected = TrimTrailingWhitespace(t.value("expected", ""));
 			lastInput = input;
 			lastExpected = expected;
 			std::string tmpIn = "/tmp/" + token + ".in";
 			WriteFile(tmpIn, input);
+<<<<<<< HEAD
 			std::string runCmd;
 
             if (lang == Language::kPython)
@@ -191,3 +212,98 @@ json RunTests(json tests, std::string token, Language lang)
         {"error", success ? json(nullptr) : json(err)}
     };
 }
+=======
+			WriteFile(tmp_out, "");
+			std::string runCmd;
+			// TODO: Add timeout back after buildroot changes.
+			if (lang == Language::kPython) {
+				runCmd = "python3 \"" + exePath + "\" < \"" + tmpIn + "\" > \"" + tmp_out + "\" 2>&1";
+			} else {
+				runCmd = "\"" + exePath + "\" < \"" + tmpIn + "\" > \"" + tmp_out + "\" 2>&1";
+			}
+
+			int ret = std::system(runCmd.c_str());
+
+			if (WEXITSTATUS(ret) == 124) {
+				success = false;
+				err = "Process timed out!";
+				break;
+			}
+
+			if (ret != 0) {
+				success = false;
+				err = "Runtime Error";
+				break;
+			}
+
+			std::string output = ReadFile(tmp_out);
+			std::string type = t["type"];
+			lastOutput = output;
+			if (type == "output_exact") {
+				while (!output.empty() && (output.back() == '\n' || output.back() == '\r')) {
+					output.pop_back();
+				}
+
+				while (!expected.empty() && (expected.back() == '\n' || expected.back() == '\r')) {
+					expected.pop_back();
+				}
+
+				if (output != expected) {
+					success = false;
+					err = "Output is wrong";
+					break;
+				}
+			}
+
+			//
+			// OUTPUT CONTAINS
+			//
+			else if (type == "output_contains") {
+				if (output.find(expected) == std::string::npos) {
+					success = false;
+					err = "Expected text not found";
+					break;
+				}
+			}
+
+			//
+			// CODE CONTAINS
+			//
+			else if (type == "code_contains") {
+				std::string code = ReadFile(exePath);
+
+				if (code.find(expected) == std::string::npos) {
+					success = false;
+					err = "Required code was not found";
+					break;
+				}
+			}
+
+			//
+			// CODE NOT CONTAINS
+			//
+			else if (type == "code_not_contains") {
+				std::string code = ReadFile(exePath);
+
+				if (code.find(expected) != std::string::npos) {
+					success = false;
+					err = "Forbidden code was found";
+					break;
+				}
+			}
+
+			else {
+				success = false;
+				err = "Unknown test type: " + type;
+				break;
+			}
+		}
+	}
+
+	return { { "success", success },
+		 { "input", lastInput },
+		 { "expected", lastExpected },
+		 { "output", lastOutput },
+		 { "error", success ? json(nullptr) : json(err) } };
+}
+>>>>>>> 38e3240ab3587eb52f677570c1ad2cfc5b8ed125
