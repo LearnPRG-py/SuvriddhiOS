@@ -10,8 +10,9 @@ const std::string PythonFilename(const std::string &filename)
 {
 	std::string name = SanitizeFilename(filename);
 	size_t dot_pos = name.rfind('.');
-	if (dot_pos != std::string::npos)
+	if (dot_pos != std::string::npos) {
 		name.erase(dot_pos);
+	}
 	return name;
 }
 

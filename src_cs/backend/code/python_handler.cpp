@@ -1,15 +1,9 @@
 #include "python_handler.h"
-
 #include <cstdlib>
-
 #include "test_handler.h"
-
 #include <filesystem>
-
 #include <iostream>
-
 #include <filesystem>
-
 #include <iostream>
 
 using json = nlohmann::json;
