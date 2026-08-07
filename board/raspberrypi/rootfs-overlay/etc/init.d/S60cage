@@ -36,7 +36,6 @@ start() {
         --ozone-platform=wayland \
         --user-data-dir=$CHROME_DATA_DIR \
         --disable-dev-shm-usage \
-        --disable-extensions \
         --disable-background-networking \
         --disable-sync \
         --disable-translate \
