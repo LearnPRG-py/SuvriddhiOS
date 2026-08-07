@@ -4,8 +4,8 @@
 #
 ################################################################################
 
-NETWORK_MANAGER_VERSION_MAJOR = 1.56
-NETWORK_MANAGER_VERSION = $(NETWORK_MANAGER_VERSION_MAJOR).0
+NETWORK_MANAGER_VERSION_MAJOR = 1.52
+NETWORK_MANAGER_VERSION = $(NETWORK_MANAGER_VERSION_MAJOR).1
 NETWORK_MANAGER_SOURCE = NetworkManager-$(NETWORK_MANAGER_VERSION).tar.xz
 NETWORK_MANAGER_SITE = https://gitlab.freedesktop.org/NetworkManager/NetworkManager/-/releases/$(NETWORK_MANAGER_VERSION)/downloads
 NETWORK_MANAGER_INSTALL_STAGING = YES
@@ -16,6 +16,7 @@ NETWORK_MANAGER_CPE_ID_PRODUCT = networkmanager
 NETWORK_MANAGER_SELINUX_MODULES = networkmanager
 
 NETWORK_MANAGER_DEPENDENCIES = \
+	host-intltool \
 	host-libxslt \
 	host-pkgconf \
 	dbus \
@@ -26,7 +27,6 @@ NETWORK_MANAGER_DEPENDENCIES = \
 
 NETWORK_MANAGER_CONF_OPTS = \
 	-Ddocs=false \
-	-Dman=false \
 	-Dtests=no \
 	-Dqt=false \
 	-Diptables=/usr/sbin/iptables \
@@ -77,14 +77,12 @@ else
 NETWORK_MANAGER_CONF_OPTS += -Dconcheck=false
 endif
 
-ifeq ($(BR2_PACKAGE_GNUTLS),y)
-NETWORK_MANAGER_DEPENDENCIES += gnutls
-NETWORK_MANAGER_CONF_OPTS += -Dcrypto=gnutls
-else ifeq ($(BR2_PACKAGE_LIBNSS),y)
+ifeq ($(BR2_PACKAGE_LIBNSS),y)
 NETWORK_MANAGER_DEPENDENCIES += libnss
 NETWORK_MANAGER_CONF_OPTS += -Dcrypto=nss
 else
-NETWORK_MANAGER_CONF_OPTS += -Dcrypto=null
+NETWORK_MANAGER_DEPENDENCIES += gnutls
+NETWORK_MANAGER_CONF_OPTS += -Dcrypto=gnutls
 endif
 
 ifeq ($(BR2_PACKAGE_LIBPSL),y)
@@ -151,12 +149,6 @@ NETWORK_MANAGER_CONF_OPTS += \
 	-Dconfig_logging_backend_default=journal \
 	-Dsession_tracking=systemd \
 	-Dsuspend_resume=systemd
-ifneq ($(BR2_PACKAGE_SYSTEMD_INITRD),y)
-define NETWORK_MANAGER_CLEAN_INITRD
-	rm -f $(TARGET_DIR)/usr/lib/systemd/system/NetworkManager-*initrd.service
-endef
-NETWORK_MANAGER_POST_INSTALL_TARGET_HOOKS += NETWORK_MANAGER_CLEAN_INITRD
-endif
 else
 NETWORK_MANAGER_CONF_OPTS += \
 	-Dsystemd_journal=false \
@@ -171,13 +163,6 @@ NETWORK_MANAGER_DEPENDENCIES += polkit
 NETWORK_MANAGER_CONF_OPTS += -Dpolkit=true
 else
 NETWORK_MANAGER_CONF_OPTS += -Dpolkit=false
-endif
-
-ifeq ($(BR2_PACKAGE_LIBNVME),y)
-NETWORK_MANAGER_DEPENDENCIES += libnvme
-NETWORK_MANAGER_CONF_OPTS += -Dnbft=true
-else
-NETWORK_MANAGER_CONF_OPTS += -Dnbft=false
 endif
 
 ifeq ($(BR2_PACKAGE_NETWORK_MANAGER_CLI),y)

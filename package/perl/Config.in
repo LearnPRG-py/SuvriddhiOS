@@ -6,7 +6,7 @@ config BR2_PACKAGE_PERL
 	  An interpreted scripting language, known among some as
 	  "Unix's Swiss Army Chainsaw".
 
-	  https://www.perl.org/
+	  http://www.perl.org/
 
 if BR2_PACKAGE_PERL
 

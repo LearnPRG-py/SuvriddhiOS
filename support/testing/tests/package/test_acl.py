@@ -52,7 +52,8 @@ class TestAcl(infra.basetest.BRTest):
 
         # Reading the file as the test user is expected to fail.
         test_read_cmd = f"su - {test_user} -c 'cat {test_file}'"
-        self.assertRunNotOk(test_read_cmd)
+        _, ret = self.emulator.run(test_read_cmd)
+        self.assertNotEqual(ret, 0)
 
         # We add a special read ACL for the test user.
         cmd = f"setfacl -m u:{test_user}:r {test_file}"
@@ -72,7 +73,8 @@ class TestAcl(infra.basetest.BRTest):
         # Attempting to write to the file as the test user is expected
         # to fail (since we put an ACL only for reading).
         cmd = f"su - {test_user} -c 'echo WriteTest > {test_file}'"
-        self.assertRunNotOk(cmd)
+        _, ret = self.emulator.run(cmd)
+        self.assertNotEqual(ret, 0)
 
         # Remove all ACLs. This could have been done with the command
         # "setfacl -b". Instead, we use the "chacl -B" command which
@@ -81,4 +83,5 @@ class TestAcl(infra.basetest.BRTest):
         self.assertRunOk(f"chacl -B {test_file}")
 
         # Reading the file as the test user is expected to fail again.
-        self.assertRunNotOk(test_read_cmd)
+        _, ret = self.emulator.run(test_read_cmd)
+        self.assertNotEqual(ret, 0)

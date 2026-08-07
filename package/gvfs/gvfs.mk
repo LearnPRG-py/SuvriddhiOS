@@ -30,7 +30,8 @@ GVFS_CONF_OPTS = \
 	-Dgoogle=false \
 	-Donedrive=false \
 	-Dmtp=false \
-	-Dsftp=false
+	-Dsftp=false \
+	-Dudisks2=false
 
 ifeq ($(BR2_PACKAGE_AVAHI),y)
 GVFS_DEPENDENCIES += avahi
@@ -156,11 +157,16 @@ GVFS_CONF_OPTS += \
 	-Dtmpfilesdir=no
 endif
 
-ifeq ($(BR2_PACKAGE_UDISKS),y)
-GVFS_DEPENDENCIES += udisks
-GVFS_CONF_OPTS += -Dudisks2=true
-else
-GVFS_CONF_OPTS += -Dudisks2=false
-endif
+define GVFS_REMOVE_TARGET_SCHEMAS
+	rm $(TARGET_DIR)/usr/share/glib-2.0/schemas/*.xml
+endef
+
+define GVFS_COMPILE_SCHEMAS
+	$(HOST_DIR)/bin/glib-compile-schemas --targetdir=$(TARGET_DIR)/usr/share/glib-2.0/schemas $(STAGING_DIR)/usr/share/glib-2.0/schemas
+endef
+
+GVFS_POST_INSTALL_TARGET_HOOKS += \
+	GVFS_REMOVE_TARGET_SCHEMAS \
+	GVFS_COMPILE_SCHEMAS
 
 $(eval $(meson-package))

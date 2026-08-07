@@ -28,7 +28,8 @@ class TestLsof(infra.basetest.BRTest):
         self.assertRunOk("lsof")
 
         # Check lsof fails if requested file is not opened
-        self.assertRunNotOk("lsof {}".format(test_file))
+        _, exit_code = self.emulator.run("lsof {}".format(test_file))
+        self.assertNotEqual(exit_code, 0)
 
         # Open the test file from the shell on descriptor 10
         self.assertRunOk("exec 10> {}".format(test_file))

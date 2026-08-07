@@ -37,15 +37,15 @@ class TestExternalToolchain(infra.basetest.BRTest):
             self.assertTrue(os.path.exists(interp_path))
 
 
-class TestExternalToolchainArmGnu(TestExternalToolchain):
+class TestExternalToolchainLinaroArm(TestExternalToolchain):
     config = BASIC_CONFIG + \
         """
         BR2_arm=y
         BR2_cortex_a8=y
         BR2_TOOLCHAIN_EXTERNAL=y
-        BR2_TOOLCHAIN_EXTERNAL_ARM_ARM=y
+        BR2_TOOLCHAIN_EXTERNAL_LINARO_ARM=y
         """
-    toolchain_prefix = "arm-none-linux-gnueabihf"
+    toolchain_prefix = "arm-linux-gnueabihf"
 
     def test_run(self):
         TestExternalToolchain.common_check(self)
@@ -70,10 +70,8 @@ class TestExternalToolchainArmGnu(TestExternalToolchain):
 
 
 class TestExternalToolchainBuildrootMusl(TestExternalToolchain):
-    busybox_fragment = \
-        infra.filepath("conf/busybox-for-old-toolchains.cfg")
     config = BASIC_CONFIG + \
-        f"""
+        """
         BR2_arm=y
         BR2_cortex_a9=y
         BR2_ARM_ENABLE_VFP=y
@@ -85,7 +83,6 @@ class TestExternalToolchainBuildrootMusl(TestExternalToolchain):
         BR2_TOOLCHAIN_EXTERNAL_HEADERS_4_12=y
         BR2_TOOLCHAIN_EXTERNAL_CUSTOM_MUSL=y
         BR2_TOOLCHAIN_EXTERNAL_CXX=y
-        BR2_PACKAGE_BUSYBOX_CONFIG_FRAGMENT_FILES="{busybox_fragment}"
         """
     toolchain_prefix = "arm-linux"
 
@@ -99,10 +96,8 @@ class TestExternalToolchainBuildrootMusl(TestExternalToolchain):
 
 
 class TestExternalToolchainCtngMusl(TestExternalToolchain):
-    busybox_fragment = \
-        infra.filepath("conf/busybox-for-old-toolchains.cfg")
     config = BASIC_CONFIG + \
-        f"""
+        """
         BR2_arm=y
         BR2_cortex_a9=y
         BR2_ARM_ENABLE_VFP=y
@@ -115,7 +110,6 @@ class TestExternalToolchainCtngMusl(TestExternalToolchain):
         BR2_TOOLCHAIN_EXTERNAL_HEADERS_3_10=y
         BR2_TOOLCHAIN_EXTERNAL_CUSTOM_MUSL=y
         BR2_TOOLCHAIN_EXTERNAL_CXX=y
-        BR2_PACKAGE_BUSYBOX_CONFIG_FRAGMENT_FILES="{busybox_fragment}"
         """
     toolchain_prefix = "arm-ctng-linux-musleabihf"
 
@@ -129,10 +123,8 @@ class TestExternalToolchainCtngMusl(TestExternalToolchain):
 
 
 class TestExternalToolchainBuildrootuClibc(TestExternalToolchain):
-    busybox_fragment = \
-        infra.filepath("conf/busybox-for-old-toolchains.cfg")
     config = BASIC_CONFIG + \
-        f"""
+        """
         BR2_arm=y
         BR2_TOOLCHAIN_EXTERNAL=y
         BR2_TOOLCHAIN_EXTERNAL_CUSTOM=y
@@ -143,7 +135,6 @@ class TestExternalToolchainBuildrootuClibc(TestExternalToolchain):
         BR2_TOOLCHAIN_EXTERNAL_LOCALE=y
         # BR2_TOOLCHAIN_EXTERNAL_HAS_THREADS_DEBUG is not set
         BR2_TOOLCHAIN_EXTERNAL_CXX=y
-        BR2_PACKAGE_BUSYBOX_CONFIG_FRAGMENT_FILES="{busybox_fragment}"
         """
     toolchain_prefix = "arm-linux"
 

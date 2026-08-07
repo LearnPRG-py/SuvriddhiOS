@@ -43,16 +43,20 @@ class TestPolkitSystemd(TestPolkitInfra):
         rule_file = "systemd-timesyncd-restart.rules"
         for rule_path in TestPolkitInfra.rule_paths:
             cmd = "su brtest -c '/bin/systemctl restart systemd-timesyncd.service'"
-            self.assertRunNotOk(cmd, 10)
+            _, exit_code = self.emulator.run(cmd, 10)
+            self.assertNotEqual(exit_code, 0)
 
             cmd = "cp /root/{file} {path}".format(file=rule_file, path=rule_path)
-            self.assertRunOk(cmd, 10)
+            _, exit_code = self.emulator.run(cmd, 10)
+            self.assertEqual(exit_code, 0)
 
             cmd = "su brtest -c '/bin/systemctl restart systemd-timesyncd.service'"
-            self.assertRunOk(cmd, 10)
+            _, exit_code = self.emulator.run(cmd, 10)
+            self.assertEqual(exit_code, 0)
 
             cmd = "rm {path}/{file}".format(file=rule_file, path=rule_path)
-            self.assertRunOk(cmd, 10)
+            _, exit_code = self.emulator.run(cmd, 10)
+            self.assertEqual(exit_code, 0)
 
 
 class TestPolkitInitd(TestPolkitInfra):
@@ -69,7 +73,8 @@ class TestPolkitInitd(TestPolkitInfra):
             self.assertEqual(output[0], "Error executing command as another user: Not authorized")
 
             cmd = "cp /root/{file} {path}/{file}".format(file=rule_file, path=rule_path)
-            self.assertRunOk(cmd, 10)
+            _, exit_code = self.emulator.run(cmd, 10)
+            self.assertEqual(exit_code, 0)
 
             cmd = "su brtest -c 'pkexec hello-polkit'"
             output, exit_code = self.emulator.run(cmd, 10)
@@ -77,4 +82,5 @@ class TestPolkitInitd(TestPolkitInfra):
             self.assertEqual(output[0], "Hello polkit!")
 
             cmd = "rm {path}/{file}".format(file=rule_file, path=rule_path)
-            self.assertRunOk(cmd, 10)
+            _, exit_code = self.emulator.run(cmd, 10)
+            self.assertEqual(exit_code, 0)

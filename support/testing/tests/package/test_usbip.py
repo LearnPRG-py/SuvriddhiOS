@@ -56,7 +56,8 @@ class TestUsbIp(infra.basetest.BRTest):
 
         # The daemon is not running yet. Listing remote devices is
         # expected to fail.
-        self.assertRunNotOk("usbip list --remote=127.0.0.1")
+        _, ret = self.emulator.run("usbip list --remote=127.0.0.1")
+        self.assertNotEqual(ret, 0)
 
         # We start the USBIP daemon.
         self.assertRunOk("usbipd -D")

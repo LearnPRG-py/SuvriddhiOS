@@ -39,7 +39,6 @@ GST1_PLUGINS_BAD_CONF_OPTS += \
 	-Davtp=disabled \
 	-Dopensles=disabled \
 	-Dmsdk=disabled \
-	-Dqsv=disabled \
 	-Dvoamrwbenc=disabled \
 	-Dbs2b=disabled \
 	-Dchromaprint=disabled \
@@ -63,7 +62,6 @@ GST1_PLUGINS_BAD_CONF_OPTS += \
 	-Dmicrodns=disabled \
 	-Dlibde265=disabled \
 	-Dmodplug=disabled \
-	-Dmusepack=disabled \
 	-Dmplex=disabled \
 	-Donnx=disabled \
 	-Dopenexr=disabled \
@@ -648,6 +646,13 @@ GST1_PLUGINS_BAD_DEPENDENCIES += libmpeg2 mjpegtools
 GST1_PLUGINS_BAD_HAS_GPL_LICENSE = y
 else
 GST1_PLUGINS_BAD_CONF_OPTS += -Dmpeg2enc=disabled
+endif
+
+ifeq ($(BR2_PACKAGE_GST1_PLUGINS_BAD_PLUGIN_MUSEPACK),y)
+GST1_PLUGINS_BAD_CONF_OPTS += -Dmusepack=enabled
+GST1_PLUGINS_BAD_DEPENDENCIES += musepack
+else
+GST1_PLUGINS_BAD_CONF_OPTS += -Dmusepack=disabled
 endif
 
 ifeq ($(BR2_PACKAGE_GST1_PLUGINS_BAD_PLUGIN_NEON),y)

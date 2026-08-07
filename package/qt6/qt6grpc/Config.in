@@ -1,7 +1,0 @@
-config BR2_PACKAGE_QT6GRPC
-	bool "qt6grpc"
-	help
-	  This package provides the Qt GRPC and Protobuf modules:
-
-	  https://doc.qt.io/qt-6/qtgrpc-index.html
-	  https://code.qt.io/cgit/qt/qtgrpc.git/

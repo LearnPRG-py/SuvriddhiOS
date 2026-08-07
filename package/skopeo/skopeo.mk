@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-SKOPEO_VERSION = 1.23.0
+SKOPEO_VERSION = 1.18.0
 SKOPEO_SITE = $(call github,containers,skopeo,v$(SKOPEO_VERSION))
 
 SKOPEO_LICENSE = Apache-2.0
@@ -17,11 +17,6 @@ SKOPEO_DEPENDENCIES = \
 	libgpgme \
 	lvm2
 
-ifeq ($(BR2_PACKAGE_SQLITE),y)
-SKOPEO_DEPENDENCIES += sqlite
-SKOPEO_TAGS += libsqlite3
-endif
-
 HOST_SKOPEO_DEPENDENCIES = \
 	host-btrfs-progs \
 	host-libgpgme \
@@ -29,11 +24,9 @@ HOST_SKOPEO_DEPENDENCIES = \
 	host-pkgconf
 
 SKOPEO_GO_ENV = PKG_CONFIG_PATH=$(HOST_DIR)/lib/pkgconfig
-SKOPEO_GOMOD = go.podman.io/skopeo
 SKOPEO_BUILD_TARGETS = cmd/skopeo
 
 HOST_SKOPEO_GO_ENV = PKG_CONFIG_PATH=$(HOST_DIR)/lib/pkgconfig
-HOST_SKOPEO_GOMOD = go.podman.io/skopeo
 HOST_SKOPEO_BUILD_TARGETS = cmd/skopeo
 
 $(eval $(golang-package))

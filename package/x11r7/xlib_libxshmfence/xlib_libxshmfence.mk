@@ -12,7 +12,4 @@ XLIB_LIBXSHMFENCE_LICENSE_FILES = COPYING
 XLIB_LIBXSHMFENCE_INSTALL_STAGING = YES
 XLIB_LIBXSHMFENCE_DEPENDENCIES = host-pkgconf xorgproto
 
-# default 'auto' leaks context from host
-XLIB_LIBXSHMFENCE_CONF_OPTS = --with-shared-memory-dir=/dev/shm
-
 $(eval $(autotools-package))

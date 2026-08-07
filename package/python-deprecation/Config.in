@@ -1,6 +1,0 @@
-config BR2_PACKAGE_PYTHON_DEPRECATION
-	bool "python-deprecation"
-	help
-	  A library to handle automated deprecations in Python.
-
-	  https://pypi.org/project/deprecation/

@@ -6,8 +6,7 @@ Subject: [PATCH] Add signum param to signal handlers
 A signal handler is required to have a signum parameter that is an
 integer.
 
-Upstream: https://github.com/intel/lmbench/pull/43
-
+Upstream: dead
 Signed-off-by: Charlie Jenkins <charlie@rivosinc.com>
 ---
  src/lat_udp.c |  4 ++--

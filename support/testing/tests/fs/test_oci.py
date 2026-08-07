@@ -3,7 +3,6 @@ import shutil
 import infra.basetest
 
 
-# gitlab-runner: xlarge
 class TestOci(infra.basetest.BRTest):
     config = \
         """
@@ -11,7 +10,7 @@ class TestOci(infra.basetest.BRTest):
         BR2_TOOLCHAIN_EXTERNAL=y
         BR2_LINUX_KERNEL=y
         BR2_LINUX_KERNEL_CUSTOM_VERSION=y
-        BR2_LINUX_KERNEL_CUSTOM_VERSION_VALUE="6.18.21"
+        BR2_LINUX_KERNEL_CUSTOM_VERSION_VALUE="5.10.61"
         BR2_LINUX_KERNEL_USE_CUSTOM_CONFIG=y
         BR2_LINUX_KERNEL_CUSTOM_CONFIG_FILE="board/qemu/aarch64-virt/linux.config"
         BR2_LINUX_KERNEL_NEEDS_HOST_OPENSSL=y

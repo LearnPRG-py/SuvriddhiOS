@@ -57,29 +57,23 @@ def process_cmdline_args():
     )
     parser.add_argument("micropython", help="Path to micropython source directory")
     parser.add_argument("destination", help="Destination directory")
-    parser.add_argument("--ffi", action=argparse.BooleanOptionalAction,
-                        default=True, help="Install libs that require FFI")
 
     args = parser.parse_args()
-    return args
+    return os.path.abspath(args.micropython), os.path.abspath(args.destination)
 
 
 def main():
-    args = process_cmdline_args()
-    mpy_lib_dir = f"{args.micropython}/lib/micropython-lib"
+    micropython_dir, destination_dir = process_cmdline_args()
+    mpy_lib_dir = f"{micropython_dir}/lib/micropython-lib"
 
     manifest = manifestfile.ManifestFile(
         manifestfile.MODE_FREEZE, {"MPY_LIB_DIR": mpy_lib_dir}
     )
 
-    if args.ffi:
-        manifest.add_library("unix-ffi", os.path.join("$(MPY_LIB_DIR)", "unix-ffi"),
-                             prepend=True)
-
     for library, is_ffi in get_all_libraries(mpy_lib_dir):
-        if args.ffi or not is_ffi:
-            manifest.require(library)
-    copy_libraries(manifest, args.destination)
+        manifest.require(library, unix_ffi=is_ffi)
+
+    copy_libraries(manifest, destination_dir)
 
 
 main()

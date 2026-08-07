@@ -1,7 +1,0 @@
-config BR2_PACKAGE_PYTHON_CLOUDPICKLE
-	bool "python-cloudpickle"
-	help
-	  Pickler class to extend the standard pickle.Pickler
-	  functionality.
-
-	  https://github.com/cloudpipe/cloudpickle

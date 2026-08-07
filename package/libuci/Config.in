@@ -1,7 +1,6 @@
 config BR2_PACKAGE_LIBUCI
 	bool "libuci"
 	depends on !BR2_STATIC_LIBS
-	depends on BR2_TOOLCHAIN_HAS_SYNC_4 # libubox -> json-c
 	select BR2_PACKAGE_LIBUBOX
 	help
 	  This library originates from the OpenWrt project to
@@ -15,4 +14,3 @@ config BR2_PACKAGE_LIBUCI
 
 comment "libuci needs a toolchain w/ dynamic library"
 	depends on BR2_STATIC_LIBS
-	depends on BR2_TOOLCHAIN_HAS_SYNC_4

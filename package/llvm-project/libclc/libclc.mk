@@ -6,11 +6,9 @@
 
 LIBCLC_VERSION = $(LLVM_PROJECT_VERSION)
 LIBCLC_SITE = $(LLVM_PROJECT_SITE)
-LIBCLC_SOURCE = $(LLVM_PROJECT_SOURCE)
-LIBCLC_DL_SUBDIR = llvm-project
+LIBCLC_SOURCE = libclc-$(LIBCLC_VERSION).src.tar.xz
 LIBCLC_LICENSE = Apache-2.0 with exceptions or MIT
 LIBCLC_LICENSE_FILES = LICENSE.TXT
-LIBCLC_SUBDIR= libclc
 
 LIBCLC_DEPENDENCIES = host-clang host-llvm host-spirv-llvm-translator
 HOST_LIBCLC_DEPENDENCIES = host-clang host-llvm host-spirv-llvm-translator

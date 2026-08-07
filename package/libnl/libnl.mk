@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-LIBNL_VERSION = 3.12.0
+LIBNL_VERSION = 3.11.0
 LIBNL_SITE = https://github.com/thom311/libnl/releases/download/libnl$(subst .,_,$(LIBNL_VERSION))
 LIBNL_LICENSE = LGPL-2.1+
 LIBNL_LICENSE_FILES = COPYING
@@ -12,8 +12,6 @@ LIBNL_CPE_ID_VALID = YES
 
 LIBNL_INSTALL_STAGING = YES
 LIBNL_DEPENDENCIES = host-bison host-flex host-pkgconf
-
-HOST_LIBNL_DEPENDENCIES = host-bison host-flex host-pkgconf
 
 ifeq ($(BR2_PACKAGE_LIBNL_TOOLS),y)
 LIBNL_CONF_OPTS += --enable-cli
@@ -29,4 +27,3 @@ LIBNL_CONF_OPTS += --disable-unit-tests
 endif
 
 $(eval $(autotools-package))
-$(eval $(host-autotools-package))

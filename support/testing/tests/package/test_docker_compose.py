@@ -17,10 +17,9 @@ class BaseTestDockerCompose(infra.basetest.BRTest):
         BR2_ROOTFS_POST_SCRIPT_ARGS="{}"
         BR2_LINUX_KERNEL=y
         BR2_LINUX_KERNEL_CUSTOM_VERSION=y
-        BR2_LINUX_KERNEL_CUSTOM_VERSION_VALUE="6.18.21"
+        BR2_LINUX_KERNEL_CUSTOM_VERSION_VALUE="4.19.262"
         BR2_LINUX_KERNEL_USE_CUSTOM_CONFIG=y
         BR2_LINUX_KERNEL_CUSTOM_CONFIG_FILE="{}"
-        BR2_LINUX_KERNEL_NEEDS_HOST_LIBELF=y
         BR2_PACKAGE_PYTHON3=y
         BR2_PACKAGE_PYTHON_DOCKER=y
         BR2_PACKAGE_CA_CERTIFICATES=y
@@ -28,10 +27,7 @@ class BaseTestDockerCompose(infra.basetest.BRTest):
         BR2_PACKAGE_DOCKER_COMPOSE=y
         BR2_PACKAGE_DOCKER_ENGINE=y
         BR2_TARGET_ROOTFS_EXT2=y
-        BR2_TARGET_ROOTFS_EXT2_4=y
-        BR2_TARGET_ROOTFS_EXT2_GEN=4
-        BR2_TARGET_ROOTFS_EXT2_LABEL="rootfs"
-        BR2_TARGET_ROOTFS_EXT2_SIZE="1024M"
+        BR2_TARGET_ROOTFS_EXT2_SIZE="512M"
         # BR2_TARGET_ROOTFS_TAR is not set
         """.format(
             infra.filepath("tests/package/copy-sample-script-to-target.sh"),
@@ -59,12 +55,12 @@ class BaseTestDockerCompose(infra.basetest.BRTest):
 
     def do_test(self):
         kernel = os.path.join(self.builddir, "images", "bzImage")
-        rootfs = os.path.join(self.builddir, "images", "rootfs.ext4")
+        rootfs = os.path.join(self.builddir, "images", "rootfs.ext2")
         self.emulator.boot(arch="x86_64",
                            kernel=kernel,
                            kernel_cmdline=["root=/dev/vda", "console=ttyS0"],
-                           options=["-cpu", "Haswell",
-                                    "-m", "1024M",
+                           options=["-cpu", "Nehalem",
+                                    "-m", "512M",
                                     "-device", "virtio-rng-pci",
                                     "-drive", "file={},format=raw,if=virtio".format(rootfs),
                                     "-net", "nic,model=virtio",
@@ -76,13 +72,11 @@ class BaseTestDockerCompose(infra.basetest.BRTest):
         self.python_docker_test()
 
 
-# gitlab-runner: large
 class TestDockerComposeRunc(BaseTestDockerCompose):
     def test_run(self):
         self.do_test()
 
 
-# gitlab-runner: large
 class TestDockerComposeCrun(BaseTestDockerCompose):
     config = BaseTestDockerCompose.config + """
         BR2_PACKAGE_CRUN=y

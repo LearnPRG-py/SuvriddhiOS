@@ -3,7 +3,6 @@ import os
 import infra.basetest
 
 
-# gitlab-runner: xlarge
 class TestZ3(infra.basetest.BRTest):
     config = infra.basetest.BASIC_TOOLCHAIN_CONFIG + \
         """

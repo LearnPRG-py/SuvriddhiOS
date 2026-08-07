@@ -7,7 +7,7 @@ config BR2_PACKAGE_LMBENCH
 	  LMbench is a suite of simple, portable,
 	  ANSI/C microbenchmarks for UNIX/POSIX.
 
-	  https://github.com/intel/lmbench
+	  http://sourceforge.net/projects/lmbench/
 
 comment "lmbench needs a toolchain w/ threads"
 	depends on BR2_USE_MMU

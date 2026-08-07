@@ -5,7 +5,7 @@ config BR2_PACKAGE_LIBPTHSEM
 	  GNU pth is a user mode multi threading library. pthsem is an
 	  extend version, with support for semaphores added.
 
-	  https://github.com/linknx/pthsem
+	  http://www.auto.tuwien.ac.at/~mkoegler/pth/
 
 if BR2_PACKAGE_LIBPTHSEM
 

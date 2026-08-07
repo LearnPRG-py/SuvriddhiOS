@@ -3,17 +3,14 @@
 DAEMON="iwd"
 PIDFILE="/var/run/$DAEMON.pid"
 
-IWD_ARGS="--logger syslog"
+IWD_ARGS=""
 
-# shellcheck source=/dev/null
 [ -r "/etc/default/$DAEMON" ] && . "/etc/default/$DAEMON"
 
 start() {
 	printf 'Starting %s: ' "$DAEMON"
 	mkdir -p /tmp/iwd/hotspot
-	# shellcheck disable=SC2086 # we need the word splitting
-	start-stop-daemon --start --background --make-pidfile \
-		--pidfile "$PIDFILE" --exec "/usr/libexec/$DAEMON" \
+	start-stop-daemon -b -m -S -q -p "$PIDFILE" -x "/usr/libexec/$DAEMON" \
 		-- $IWD_ARGS
 	status=$?
 	if [ "$status" -eq 0 ]; then
@@ -26,33 +23,20 @@ start() {
 
 stop() {
 	printf 'Stopping %s: ' "$DAEMON"
-	start-stop-daemon --stop --pidfile "$PIDFILE" \
-		--exec "/usr/libexec/$DAEMON"
+	start-stop-daemon -K -q -p "$PIDFILE"
 	status=$?
 	if [ "$status" -eq 0 ]; then
 		echo "OK"
 	else
 		echo "FAIL"
-		return "$status"
 	fi
-	while start-stop-daemon --stop --test --quiet --pidfile "$PIDFILE" \
-		--exec "/usr/libexec/$DAEMON"; do
-		sleep 0.1
-	done
-	rm -f "$PIDFILE"
 	return "$status"
 }
 
-restart() {
-	stop
-	start
-}
-
 case "$1" in
-	start|stop|restart)
-		"$1"
-		;;
+	start|stop)
+		"$1";;
 	*)
-		echo "Usage: $0 {start|stop|restart}"
+		echo "Usage: $0 {start|stop}"
 		exit 1
 esac

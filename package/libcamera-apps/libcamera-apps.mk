@@ -19,8 +19,7 @@ LIBCAMERA_APPS_DEPENDENCIES = \
 
 LIBCAMERA_APPS_CONF_OPTS = \
 	-Denable_opencv=disabled \
-	-Denable_tflite=disabled \
-	-Ddisable_rpi_features=true
+	-Denable_tflite=disabled
 
 ifeq ($(BR2_PACKAGE_LIBDRM),y)
 LIBCAMERA_APPS_DEPENDENCIES += libdrm
@@ -34,6 +33,12 @@ LIBCAMERA_APPS_DEPENDENCIES += ffmpeg libdrm
 LIBCAMERA_APPS_CONF_OPTS += -Denable_libav=enabled
 else
 LIBCAMERA_APPS_CONF_OPTS += -Denable_libav=disabled
+endif
+
+ifeq ($(BR2_PACKAGE_RPI_USERLAND),y)
+LIBCAMERA_APPS_CONF_OPTS += -Ddisable_rpi_features=false
+else
+LIBCAMERA_APPS_CONF_OPTS += -Ddisable_rpi_features=true
 endif
 
 ifeq ($(BR2_PACKAGE_XORG7),y)

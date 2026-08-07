@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-IGT_GPU_TOOLS_VERSION = 2.5
+IGT_GPU_TOOLS_VERSION = 2.1
 IGT_GPU_TOOLS_SOURCE = igt-gpu-tools-$(IGT_GPU_TOOLS_VERSION).tar.xz
 IGT_GPU_TOOLS_SITE = https://www.x.org/releases/individual/app
 IGT_GPU_TOOLS_LICENSE = MIT
@@ -18,10 +18,9 @@ IGT_GPU_TOOLS_DEPENDENCIES = \
 	libdrm \
 	libglib2 \
 	libpciaccess \
-	libudev \
-	pciutils \
 	pixman \
 	procps-ng \
+	udev \
 	zlib
 
 IGT_GPU_TOOLS_CONF_OPTS = \
@@ -45,9 +44,9 @@ ifeq ($(BR2_i386)$(BR2_x86_64)x$(BR2_RELRO_NONE),yx)
 IGT_GPU_TOOLS_LDFLAGS = $(TARGET_LDFLAGS) -Wl,-z,lazy
 endif
 
-ifeq ($(BR2_PACKAGE_JANSSON),y)
+ifeq ($(BR2_PACKAGE_JSON_C),y)
 IGT_GPU_TOOLS_CONF_OPTS += -Drunner=enabled
-IGT_GPU_TOOLS_DEPENDENCIES += jansson
+IGT_GPU_TOOLS_DEPENDENCIES += json-c
 else
 IGT_GPU_TOOLS_CONF_OPTS += -Drunner=disabled
 endif
