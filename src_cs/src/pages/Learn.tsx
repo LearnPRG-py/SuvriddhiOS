@@ -10,7 +10,6 @@ import { useStore } from "../store/useStore";
 import type { ActiveItem, Topic, TopicItem } from "../types/learningitems";
 import type { LanguageType } from "../types/language";
 
-
 export default function Learn() {
     const { language } = useStore();
     const { setLastActivity, markItemCompleted, isItemCompleted } = useStore();
@@ -54,18 +53,7 @@ export default function Learn() {
 
     useEffect(() => {
         if (topics.length === 0) return;
-    useEffect(() => {
-        if (topics.length === 0) return;
 
-        const savedCompleted = localStorage.getItem("completedItems");
-        if (savedCompleted) {
-            const completedItems: { topicId: string; itemId: string }[] =
-                JSON.parse(savedCompleted);
-            completedItems.forEach((item) => {
-                if (!isItemCompleted(item.itemId))
-                    markItemCompleted(item.itemId);
-            });
-        }
         const savedCompleted = localStorage.getItem("completedItems");
         if (savedCompleted) {
             const completedItems: { topicId: string; itemId: string }[] =
@@ -132,30 +120,9 @@ export default function Learn() {
 
     function onMarkComplete() {
         if (!active) return;
-    function onMarkComplete() {
-        if (!active) return;
 
         markItemCompleted(active.itemId);
-        markItemCompleted(active.itemId);
 
-        // Save current completed item
-        const saved = localStorage.getItem("completedItems");
-        let completedItems = saved ? JSON.parse(saved) : [];
-        if (
-            !completedItems.find(
-                (i: any) =>
-                    i.itemId === active.itemId && i.topicId === active.topicId,
-            )
-        ) {
-            completedItems.push({
-                topicId: active.topicId,
-                itemId: active.itemId,
-            });
-            localStorage.setItem(
-                "completedItems",
-                JSON.stringify(completedItems),
-            );
-        }
         // Save current completed item
         const saved = localStorage.getItem("completedItems");
         let completedItems = saved ? JSON.parse(saved) : [];
@@ -180,56 +147,13 @@ export default function Learn() {
             (t) => t.id === active.topicId,
         );
         if (currentTopicIndex === -1) return;
-        // Move to next item
-        const currentTopicIndex = topics.findIndex(
-            (t) => t.id === active.topicId,
-        );
-        if (currentTopicIndex === -1) return;
 
         const currentTopic = topics[currentTopicIndex];
         const currentItemIndex = currentTopic.items.findIndex(
             (i) => i.id === active.itemId,
         );
         if (currentItemIndex === -1) return;
-        const currentTopic = topics[currentTopicIndex];
-        const currentItemIndex = currentTopic.items.findIndex(
-            (i) => i.id === active.itemId,
-        );
-        if (currentItemIndex === -1) return;
 
-        if (currentItemIndex < currentTopic.items.length - 1) {
-            handleOpenItem(
-                active.topicId,
-                currentTopic.items[currentItemIndex + 1].id,
-            );
-        } else if (currentTopicIndex < topics.length - 1) {
-            const nextTopic = topics[currentTopicIndex + 1];
-            if (nextTopic.items.length > 0) {
-                handleOpenItem(nextTopic.id, nextTopic.items[0].id);
-            }
-        }
-    }
-    console.log("language", language);
-    console.log("topics", topics);
-    console.log("active", active);
-    const activeItem = useMemo(() => {
-        console.log("Computing activeItem");
-
-        if (!active) {
-            console.log("No active item");
-            return null;
-        }
-
-        const topic = topics.find((t) => t.id === active.topicId);
-
-        console.log("Found topic:", topic);
-
-        const item = topic?.items.find((i) => i.id === active.itemId);
-
-        console.log("Found item:", item);
-
-        return item ?? null;
-    }, [active, topics]);
         if (currentItemIndex < currentTopic.items.length - 1) {
             handleOpenItem(
                 active.topicId,
