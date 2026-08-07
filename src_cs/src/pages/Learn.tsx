@@ -147,12 +147,10 @@ export default function Learn() {
             (t) => t.id === active.topicId,
         );
         if (currentTopicIndex === -1) return;
-
         const currentTopic = topics[currentTopicIndex];
         const currentItemIndex = currentTopic.items.findIndex(
             (i) => i.id === active.itemId,
         );
-        if (currentItemIndex === -1) return;
 
         if (currentItemIndex < currentTopic.items.length - 1) {
             handleOpenItem(

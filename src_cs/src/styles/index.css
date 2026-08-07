@@ -466,11 +466,6 @@
            border border-border bg-card text-muted-foreground;
     }
 
-    /* ──────────────────────────────────────────────────────────
-     CUSTOM MODERN SCROLLBAR
-     Applied to scrollable containers for a sleek appearance.
-     ────────────────────────────────────────────────────────── */
-
     .scrollbar-modern {
         /* Firefox standard */
         scrollbar-width: thin;

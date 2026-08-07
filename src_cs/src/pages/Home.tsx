@@ -103,13 +103,6 @@ export default function Home() {
                     </section>
                 </div>
             </div>
-            <a
-                href="http://127.0.0.1:8080"
-                className="fixed bottom-6 left-6 text-slate-200 hover:text-white rounded-lg p-2.5 flex items-center justify-center"
-                aria-label="Home"
-            >
-                <HomeIcon className="fixed bottom-4 right-4 w-8 h-8 text-balance" />
-            </a>
         </div>
     );
 }

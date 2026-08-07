@@ -10,7 +10,7 @@ import "ace-builds/src-noconflict/theme-tomorrow_night_eighties";
 import "ace-builds/src-noconflict/ext-language_tools";
 
 interface ExerciseTest {
-    input: string;
+    input?: string | string[];
     expected: string;
 }
 
@@ -54,8 +54,8 @@ export default function ExerciseView({ item, onMarkComplete }: Props) {
     const [draftLoaded, setDraftLoaded] = useState(false);
     const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
 
-    const [showHints, setShowHints] = useState(false);
-    const [showWarnings, setShowWarnings] = useState(false);
+    const [hintIndex, setHintIndex] = useState(0);
+
     const editorRef = useRef<AceEditor>(null);
 
     useEffect(() => {
@@ -71,8 +71,15 @@ export default function ExerciseView({ item, onMarkComplete }: Props) {
                 }
 
                 setExercise(data);
-                setTaskIndex(0);
                 setCompletedTasks(new Array(data.tasks.length).fill(false));
+
+                const savedTaskIndex = localStorage.getItem(
+                    `exercise-task-${item.id}`,
+                );
+                const taskIdx = savedTaskIndex
+                    ? parseInt(savedTaskIndex, 10)
+                    : 0;
+                setTaskIndex(taskIdx);
             } catch (err) {
                 console.error(err);
                 setExercise(null);
@@ -99,7 +106,17 @@ export default function ExerciseView({ item, onMarkComplete }: Props) {
 
     useEffect(() => {
         editorRef.current?.editor.focus();
-    }, [item.id]);
+        setHintIndex(0);
+    }, [item.id, taskIndex]);
+
+    useEffect(() => {
+        if (exercise) {
+            localStorage.setItem(
+                `exercise-task-${item.id}`,
+                taskIndex.toString(),
+            );
+        }
+    }, [taskIndex, exercise, item.id]);
 
     if (!exercise) {
         return (
@@ -110,6 +127,13 @@ export default function ExerciseView({ item, onMarkComplete }: Props) {
     }
 
     const task = exercise.tasks[taskIndex];
+
+    const nextUnlockedIndex = completedTasks.findIndex((done) => !done);
+    const maxUnlockedIndex =
+        nextUnlockedIndex === -1
+            ? exercise.tasks.length - 1
+            : nextUnlockedIndex;
+    const isTaskUnlocked = (index: number) => index <= maxUnlockedIndex;
 
     const difficultyColor = useMemo(() => {
         switch (task.difficulty) {
@@ -137,25 +161,12 @@ export default function ExerciseView({ item, onMarkComplete }: Props) {
         setIsSuccess(null);
 
         try {
-            // const currentTask = exercise.tasks[taskIndex];
-
             const endpoint =
                 language === "Python"
                     ? "http://127.0.0.1:8000/api/python"
                     : "http://127.0.0.1:8000/api/compile";
 
             if (language === "Python") {
-                console.log(task.tests);
-                console.log(
-                    JSON.stringify(
-                        {
-                            code,
-                            tests: task.tests,
-                        },
-                        null,
-                        2,
-                    ),
-                );
                 const res = await fetch(endpoint, {
                     method: "POST",
                     headers: {
@@ -181,13 +192,14 @@ export default function ExerciseView({ item, onMarkComplete }: Props) {
 
                     if (taskIndex === exercise.tasks.length - 1) {
                         onMarkComplete();
+                    } else {
+                        setTaskIndex(taskIndex + 1);
                     }
 
                     return;
                 }
 
                 setIsSuccess(false);
-
                 setOutput(
                     `Test Failed
 
@@ -246,7 +258,7 @@ ${json.expected}`,
                 } else {
                     setIsSuccess(false);
                     setOutput(
-                        `❌ Test Failed
+                        `Test Failed
 
 Output:
 ${runJson.output}
@@ -264,93 +276,84 @@ ${runJson.expected}`,
         }
     }
     return (
-        <div className="grow overflow-y-auto p-8">
-            <div className="mx-auto max-w-6xl flex flex-col gap-8">
+        <div className="grow overflow-y-auto p-6">
+            <div className="mx-auto max-w-4xl">
                 {/* Header */}
-
-                <div className="space-y-2">
-                    <h1 className="text-4xl font-bold">{exercise.title}</h1>
-
-                    <p className="text-zinc-400 text-lg">{exercise.lead}</p>
+                <div className="mb-8">
+                    <h1 className="text-3xl font-bold mb-2">
+                        {exercise.title}
+                    </h1>
+                    <p className="text-lg text-muted-foreground">
+                        {exercise.lead}
+                    </p>
                 </div>
 
-                {/* Task Card */}
-
-                <div className="rounded-xl border border-zinc-800 bg-zinc-900">
-                    <div className="flex items-center justify-between border-b border-zinc-800 px-6 py-4">
-                        <div>
-                            <h2 className="text-2xl font-semibold">
-                                {task.title}
-                            </h2>
-
-                            <p className="text-sm text-zinc-500 mt-1">
-                                Task {taskIndex + 1} of {exercise.tasks.length}
-                            </p>
-                        </div>
-
-                        <div
-                            className={`rounded-full px-3 py-1 text-sm font-semibold text-white ${difficultyColor}`}
+                {/* Task Selection */}
+                <div className="mb-8 flex flex-wrap gap-2">
+                    {exercise.tasks.map((t, i) => (
+                        <button
+                            key={t.taskId}
+                            onClick={() => isTaskUnlocked(i) && setTaskIndex(i)}
+                            disabled={!isTaskUnlocked(i)}
+                            className={`rounded-lg px-4 py-2 text-sm font-medium transition-all ${
+                                i === taskIndex
+                                    ? "bg-primary text-white shadow-[0_8px_30px_rgba(142,124,195,0.25)]"
+                                    : completedTasks[i]
+                                      ? "bg-violet-700 text-white hover:bg-violet-600"
+                                      : isTaskUnlocked(i)
+                                        ? "bg-secondary text-foreground hover:bg-secondary/80"
+                                        : "bg-secondary text-muted-foreground cursor-not-allowed opacity-50"
+                            }`}
                         >
-                            {task.difficulty ?? "Core"}
-                        </div>
-                    </div>
+                            {completedTasks[i] ? "✓ " : ""}
+                            {t.title}
+                        </button>
+                    ))}
+                </div>
 
-                    <div className="p-6 flex flex-col gap-8">
-                        {/* Background */}
+                {/* Task Content */}
+                <div className="space-y-6 mb-8">
+                    <section>
+                        <h2 className="text-2xl font-semibold mb-3">
+                            {task.title}
+                        </h2>
+                        <p className="text-sm text-muted-foreground mb-2">
+                            Task {taskIndex + 1} of {exercise.tasks.length}
+                            {task.difficulty && ` • ${task.difficulty}`}
+                        </p>
+                        <p className="text-foreground leading-7">
+                            {task.background}
+                        </p>
+                    </section>
 
+                    {task.backgroundCode && (
                         <section>
-                            <h3 className="text-xl font-semibold mb-3">
-                                Background
+                            <h3 className="text-lg font-semibold mb-3">
+                                Example
                             </h3>
-
-                            <p className="leading-7 text-zinc-300">
-                                {task.background}
-                            </p>
+                            <pre className="bg-card p-4 rounded-lg overflow-x-auto text-sm text-foreground border border-border">
+                                {task.backgroundCode}
+                            </pre>
                         </section>
+                    )}
 
-                        {/* Example */}
-
-                        <section className="space-y-3">
-                            <h3 className="text-xl font-semibold">Example</h3>
-
-                            <AceEditor
-                                mode={
-                                    language === "Python" ? "python" : "c_cpp"
-                                }
-                                theme="tomorrow_night_eighties"
-                                value={task.backgroundCode}
-                                readOnly
-                                width="100%"
-                                height="170px"
-                                showPrintMargin={false}
-                                setOptions={{
-                                    useWorker: false,
-                                }}
-                            />
-                        </section>
-
-                        {/* Output */}
-
-                        {task.backgroundCodeOutput && (
-                            <section>
-                                <h3 className="text-xl font-semibold mb-3">
-                                    Output
-                                </h3>
-
-                                <pre className="rounded-lg bg-black p-4 font-mono text-green-400 overflow-x-auto">
-                                    {task.backgroundCodeOutput}
-                                </pre>
-                            </section>
-                        )}
-
-                        {/* Instructions */}
-
+                    {task.backgroundCodeOutput && (
                         <section>
-                            <h3 className="text-xl font-semibold mb-4">
+                            <h3 className="text-lg font-semibold mb-3">
+                                Expected Output
+                            </h3>
+                            <pre className="bg-card p-4 rounded-lg overflow-auto text-sm text-primary border border-border break-words whitespace-pre-wrap">
+                                {task.backgroundCodeOutput}
+                            </pre>
+                        </section>
+                    )}
+
+                    {task.instructions.length > 0 && (
+                        <section>
+                            <h3 className="text-lg font-semibold mb-3">
                                 Instructions
                             </h3>
-
-                            <div className="space-y-3">
+                            <div className="space-y-2">
                                 {task.instructions.map((instruction, i) => (
                                     <label
                                         key={i}
@@ -367,97 +370,93 @@ ${runJson.expected}`,
                                 ))}
                             </div>
                         </section>
+                    )}
 
-                        {/* Hints */}
-
-                        <section className="rounded-lg border border-zinc-700">
-                            <button
-                                onClick={() => setShowHints(!showHints)}
-                                className="w-full flex justify-between items-center px-5 py-4 text-left font-semibold"
-                            >
-                                <span>💡 Hints</span>
-
-                                <span>{showHints ? "−" : "+"}</span>
-                            </button>
-
-                            {showHints && (
-                                <ul className="px-8 pb-5 list-disc space-y-2">
-                                    {task.hints.map((hint, i) => (
-                                        <li key={i}>{hint}</li>
-                                    ))}
-                                </ul>
-                            )}
-                        </section>
-
-                        {/* Warnings */}
-
-                        <section className="rounded-lg border border-yellow-700">
-                            <button
-                                onClick={() => setShowWarnings(!showWarnings)}
-                                className="w-full flex justify-between items-center px-5 py-4 text-left font-semibold"
-                            >
-                                <span>⚠ Warnings</span>
-
-                                <span>{showWarnings ? "−" : "+"}</span>
-                            </button>
-
-                            {showWarnings && (
-                                <ul className="px-8 pb-5 list-disc space-y-2">
-                                    {task.warnings.map((warning, i) => (
-                                        <li key={i}>{warning}</li>
-                                    ))}
-                                </ul>
-                            )}
-                        </section>
-
-                        {/* Expected */}
-
+                    {task.hints.length > 0 && (
                         <section>
-                            <h3 className="text-xl font-semibold mb-3">
-                                Expected Output
+                            <h3 className="text-lg font-semibold mb-3">
+                                💡 Hints
                             </h3>
-
-                            <pre className="rounded-lg bg-black p-4 font-mono text-cyan-300 overflow-x-auto">
-                                {task.expectedOutput}
-                            </pre>
+                            <div className="space-y-3">
+                                {hintIndex > 0 && (
+                                    <div className="space-y-2">
+                                        {task.hints
+                                            .slice(0, hintIndex)
+                                            .map((hint, i) => (
+                                                <div
+                                                    key={i}
+                                                    className="bg-card p-4 rounded-lg border border-border"
+                                                >
+                                                    <p className="text-sm text-muted-foreground mb-1">
+                                                        Hint {i + 1}
+                                                    </p>
+                                                    <p className="text-foreground">
+                                                        {hint}
+                                                    </p>
+                                                </div>
+                                            ))}
+                                    </div>
+                                )}
+                                <button
+                                    onClick={() => setHintIndex(hintIndex + 1)}
+                                    disabled={hintIndex >= task.hints.length}
+                                    className="px-4 py-2 rounded-lg bg-primary text-primary-foreground hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
+                                >
+                                    {hintIndex >= task.hints.length
+                                        ? "No more hints"
+                                        : `Show Next Hint (${hintIndex + 1}/${task.hints.length})`}
+                                </button>
+                            </div>
                         </section>
-                    </div>
+                    )}
+
+                    {task.warnings.length > 0 && (
+                        <section>
+                            <h3 className="text-lg font-semibold mb-3">
+                                ⚠ Warnings
+                            </h3>
+                            <ul className="space-y-2 list-disc ml-4 text-foreground">
+                                {task.warnings.map((warning, i) => (
+                                    <li key={i}>{warning}</li>
+                                ))}
+                            </ul>
+                        </section>
+                    )}
                 </div>
 
-                {/* Code Editor */}
-
-                <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-6">
-                    <h2 className="text-2xl font-semibold mb-4">
+                {/* Code Editor Section */}
+                <div className="mb-8">
+                    <h3 className="text-lg font-semibold mb-3">
                         Your Solution
-                    </h2>
+                    </h3>
+                    <div className="rounded-lg border border-border bg-card overflow-hidden">
+                        <AceEditor
+                            ref={editorRef}
+                            mode={language === "Python" ? "python" : "c_cpp"}
+                            theme="tomorrow_night_eighties"
+                            width="100%"
+                            height="320px"
+                            value={code}
+                            onChange={setCode}
+                            showPrintMargin={false}
+                            setOptions={{
+                                useWorker: false,
+                                tabSize: 4,
+                            }}
+                        />
+                    </div>
 
-                    <AceEditor
-                        ref={editorRef}
-                        mode={language === "Python" ? "python" : "c_cpp"}
-                        theme="tomorrow_night_eighties"
-                        width="100%"
-                        height="420px"
-                        value={code}
-                        onChange={setCode}
-                        showPrintMargin={false}
-                        setOptions={{
-                            useWorker: false,
-                            tabSize: 4,
-                        }}
-                    />
-
-                    <div className="mt-6 flex gap-4">
+                    <div className="mt-4 flex flex-wrap gap-3">
                         <button
                             onClick={handleSubmit}
                             disabled={running}
-                            className="rounded-lg bg-blue-600 px-5 py-3 font-medium hover:bg-blue-500 disabled:opacity-50"
+                            className="rounded-lg bg-primary px-4 py-2 font-medium text-primary-foreground hover:opacity-90 disabled:opacity-50"
                         >
-                            {running ? "Running..." : "Compile & Run"}
+                            {running ? "Running..." : "Test"}
                         </button>
-
                         <button
                             onClick={() => setCode(exercise.starterCode)}
-                            className="rounded-lg border border-zinc-700 px-5 py-3"
+                            className="rounded-lg border border-border px-4 py-2 hover:bg-secondary transition-colors"
                         >
                             Reset
                         </button>
@@ -466,30 +465,6 @@ ${runJson.expected}`,
                     <div className="mt-6">
                         <OutputFeedback output={output} isSuccess={isSuccess} />
                     </div>
-                </div>
-
-                {/* Navigation */}
-
-                <div className="flex flex-wrap gap-3">
-                    {exercise.tasks.map((t, i) => (
-                        <button
-                            key={t.taskId}
-                            onClick={() => setTaskIndex(i)}
-                            className={`rounded-lg px-4 py-2 transition
-
-                        ${
-                            i === taskIndex
-                                ? "bg-blue-600 text-white"
-                                : completedTasks[i]
-                                  ? "bg-green-700 text-white"
-                                  : "bg-zinc-800 hover:bg-zinc-700"
-                        }`}
-                        >
-                            {completedTasks[i] ? "✓ " : ""}
-
-                            {t.title}
-                        </button>
-                    ))}
                 </div>
             </div>
         </div>
