@@ -16,14 +16,6 @@ export default function Home() {
         markItemCompleted,
         isItemCompleted,
     } = useStore();
-    const {
-        language,
-        setLanguage,
-        lastActivity,
-        setLastActivity,
-        markItemCompleted,
-        isItemCompleted,
-    } = useStore();
 
     const [topics, setTopics] = useState<Topic[]>([]);
     useEffect(() => {
@@ -55,17 +47,6 @@ export default function Home() {
         }
     }, [lastActivity]);
 
-    useEffect(() => {
-        if (topics.length === 0) return;
-        const savedCompletedItems = localStorage.getItem("completedItems");
-        if (savedCompletedItems) {
-            const completedItems: { topicId: string; itemId: string }[] =
-                JSON.parse(savedCompletedItems);
-            completedItems.forEach((item) => {
-                if (!isItemCompleted(item.itemId))
-                    markItemCompleted(item.itemId);
-            });
-        }
     useEffect(() => {
         if (topics.length === 0) return;
         const savedCompletedItems = localStorage.getItem("completedItems");
