@@ -465,7 +465,6 @@
         @apply flex items-center gap-1 px-2.5 py-1 rounded text-xs
            border border-border bg-card text-muted-foreground;
     }
-<<<<<<< HEAD
 
     /* ──────────────────────────────────────────────────────────
      CUSTOM MODERN SCROLLBAR
@@ -496,6 +495,4 @@
     .scrollbar-modern::-webkit-scrollbar-thumb:hover {
         background: var(--color-primary);
     }
-=======
->>>>>>> 38e3240ab3587eb52f677570c1ad2cfc5b8ed125
 } /* end @layer components */
