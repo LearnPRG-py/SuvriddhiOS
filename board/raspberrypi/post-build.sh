@@ -25,6 +25,8 @@ echo "BCM43455 firmware installed."
 
 ls -lh "$FIRMWARE_DIR"/brcmfmac43455-sdio.*
 
+cp -r ${TARGET_DIR}/../../uBlock_extn ${TARGET_DIR}/root/uBlock_extn
+
 # Write scripts here
 
 cd ${TARGET_DIR}/../../src_phy/public/pdfs
