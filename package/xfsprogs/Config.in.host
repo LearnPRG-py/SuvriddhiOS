@@ -1,6 +1,0 @@
-config BR2_PACKAGE_HOST_XFSPROGS
-	bool "host xfsprogs"
-	help
-	  The XFS file system utilities and libraries
-
-	  https://xfs.wiki.kernel.org

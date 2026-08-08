@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-VIM_VERSION = 9.1.2148
+VIM_VERSION = 9.1.1684
 VIM_SITE = $(call github,vim,vim,v$(VIM_VERSION))
 VIM_DEPENDENCIES = ncurses $(TARGET_NLS_DEPENDENCIES)
 VIM_SUBDIR = src
@@ -46,17 +46,21 @@ else
 VIM_CONF_OPTS += --disable-selinux
 endif
 
-VIM_INSTALL_TARGETS = \
-	installvimbin installpack \
-	installtools installlinks
-
-ifeq ($(BR2_PACKAGE_VIM_RUNTIME),y)
-VIM_INSTALL_TARGETS += installrtbase installmacros
-endif
-
 define VIM_INSTALL_TARGET_CMDS
-	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D)/src DESTDIR=$(TARGET_DIR) \
-		$(VIM_INSTALL_TARGETS)
+	cd $(@D)/src; \
+		$(TARGET_MAKE_ENV) $(MAKE) DESTDIR=$(TARGET_DIR) installvimbin; \
+		$(TARGET_MAKE_ENV) $(MAKE) DESTDIR=$(TARGET_DIR) installpack; \
+		$(TARGET_MAKE_ENV) $(MAKE) DESTDIR=$(TARGET_DIR) installtools; \
+		$(TARGET_MAKE_ENV) $(MAKE) DESTDIR=$(TARGET_DIR) installlinks
+endef
+
+define VIM_INSTALL_RUNTIME_CMDS
+	cd $(@D)/src; \
+		$(TARGET_MAKE_ENV) $(MAKE) DESTDIR=$(TARGET_DIR) installrtbase; \
+		$(TARGET_MAKE_ENV) $(MAKE) DESTDIR=$(TARGET_DIR) installmacros
+endef
+
+define VIM_REMOVE_DOCS
 	$(RM) -rf $(TARGET_DIR)/usr/share/vim/vim*/doc/
 endef
 
@@ -72,6 +76,11 @@ define VIM_INSTALL_VI_SYMLINK
 endef
 endif
 VIM_POST_INSTALL_TARGET_HOOKS += VIM_INSTALL_VI_SYMLINK
+
+ifeq ($(BR2_PACKAGE_VIM_RUNTIME),y)
+VIM_POST_INSTALL_TARGET_HOOKS += VIM_INSTALL_RUNTIME_CMDS
+VIM_POST_INSTALL_TARGET_HOOKS += VIM_REMOVE_DOCS
+endif
 
 HOST_VIM_DEPENDENCIES = host-ncurses
 HOST_VIM_CONF_OPTS = \

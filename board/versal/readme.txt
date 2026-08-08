@@ -5,23 +5,19 @@ Xilinx Versal boards:
 Supported Versal Boards:
 Xilinx VCK190 board
 Xilinx VEK280 board
-Xilinx VPK120 board
 Xilinx VPK180 board
 ******************************************
 
 Evaluation board features can be found here with the links below.
 
 VCK190:
-https://www.amd.com/en/products/adaptive-socs-and-fpgas/evaluation-boards/vck190.html
+https://www.xilinx.com/products/boards-and-kits/vck190.html
 
 VEK280:
-https://www.amd.com/en/products/adaptive-socs-and-fpgas/evaluation-boards/vek280.html
-
-VPK120:
-https://www.amd.com/en/products/adaptive-socs-and-fpgas/evaluation-boards/vpk120.html
+https://www.xilinx.com/products/boards-and-kits/vek280.html
 
 VPK180:
-https://www.amd.com/en/products/adaptive-socs-and-fpgas/evaluation-boards/vpk180.html
+https://www.xilinx.com/products/boards-and-kits/vpk180.html
 
 
 How to build it

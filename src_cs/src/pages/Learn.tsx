@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "preact-router/match";
 import Sidebar from "../components/learn/sidebar";
 import LessonView from "../components/learn/lessonview";
 import ExerciseView from "../components/learn/exerciseview";
-import ChallengeView from "../components/learn/challengeview";
+// import ChallengeView from "../components/learn/challengeview";
 // import QuizView from "../components/learn/quizview";
 // import ProjectView from "../components/learn/projectview";
 import { useStore } from "../store/useStore";
@@ -14,21 +15,34 @@ export default function Learn() {
     const { setLastActivity, markItemCompleted, isItemCompleted } = useStore();
     const [topics, setTopics] = useState<Topic[]>([]);
     const [active, setActive] = useState<ActiveItem | null>(null);
-    
 
     useEffect(() => {
         console.count("Learn mounted");
-        
-        let path = "/data/learn/topics.json";
 
-        if (language === "Python") {
-            path = "/data/learn/topics_py.json";
+        const path =
+            language === "Python"
+                ? "/data/learn/topics_py.json"
+                : language === "C"
+                  ? "/data/learn/topics.json"
+                  : null;
+
+        if (!path) {
+            setTopics([]);
+            return;
         }
+
         fetch(path)
             .then((r) => r.json())
             .then((t: Topic[]) => {
-                console.log("Loaded topics:", t);
-                setTopics(t);
+                const filtered = t.map((topic) => ({
+                    ...topic,
+                    items: topic.items.filter(
+                        (item) =>
+                            item.type !== "challenge" && item.type !== "quiz",
+                    ),
+                }));
+                console.log("Loaded topics:", filtered);
+                setTopics(filtered);
             })
             .catch((e) => {
                 console.error("Failed loading topics:", e);
@@ -51,16 +65,19 @@ export default function Learn() {
         }
 
         if (!active) {
-            const savedLast = localStorage.getItem("lastActivity");
+            const savedLast = localStorage.getItem(`lastActivity_${language}`);
             if (savedLast) {
                 const parsed: ActiveItem = JSON.parse(savedLast);
-                const topicExists = topics.some((t) => t.id === parsed.topicId);
+                const topic = topics.find((t) => t.id === parsed.topicId);
+                const item = topic?.items.find((i) => i.id === parsed.itemId);
 
-                if (topicExists) {
+                if (topic && item) {
                     setActive(parsed);
                     setLastActivity(parsed);
                 } else {
-                    console.warn("Saved activity invalid, resetting.");
+                    console.warn(
+                        "Saved activity invalid or unavailable, resetting.",
+                    );
 
                     const firstItem = {
                         topicId: topics[0].id,
@@ -68,9 +85,7 @@ export default function Learn() {
                     };
 
                     setActive(firstItem);
-                    setLastActivity(firstItem);
-
-                    localStorage.removeItem("lastActivity");
+                    localStorage.removeItem(`lastActivity_${language}`);
                 }
             } else {
                 const firstItem: ActiveItem = {
@@ -78,14 +93,29 @@ export default function Learn() {
                     itemId: topics[0].items[0].id,
                 };
                 setActive(firstItem);
-                setLastActivity(firstItem);
             }
         }
-    }, [topics, active, markItemCompleted, isItemCompleted, setLastActivity]);
+    }, [
+        topics,
+        active,
+        markItemCompleted,
+        isItemCompleted,
+        setLastActivity,
+        language,
+    ]);
+
+    function persistActivity(activity: ActiveItem) {
+        setLastActivity(activity);
+        localStorage.setItem(
+            `lastActivity_${language}`,
+            JSON.stringify(activity),
+        );
+    }
 
     function handleOpenItem(topicId: string, itemId: string) {
-        setActive({ topicId, itemId });
-        setLastActivity({ topicId, itemId });
+        const activity = { topicId, itemId };
+        setActive(activity);
+        persistActivity(activity);
     }
 
     function onMarkComplete() {
@@ -117,12 +147,10 @@ export default function Learn() {
             (t) => t.id === active.topicId,
         );
         if (currentTopicIndex === -1) return;
-
         const currentTopic = topics[currentTopicIndex];
         const currentItemIndex = currentTopic.items.findIndex(
             (i) => i.id === active.itemId,
         );
-        if (currentItemIndex === -1) return;
 
         if (currentItemIndex < currentTopic.items.length - 1) {
             handleOpenItem(
@@ -158,6 +186,28 @@ export default function Learn() {
         return item ?? null;
     }, [active, topics]);
 
+    if (!language) {
+        return (
+            <div className="min-h-screen flex items-center justify-center px-6 text-center">
+                <div>
+                    <h1 className="text-3xl font-semibold mb-3">
+                        Select a language first
+                    </h1>
+                    <p className="text-muted-foreground mb-6">
+                        The Learn page requires a selected language before
+                        loading lessons.
+                    </p>
+                    <Link
+                        href="/"
+                        className="rounded-lg bg-primary-muted px-4 py-2 text-primary-foreground hover:opacity-80"
+                    >
+                        Go to Home
+                    </Link>
+                </div>
+            </div>
+        );
+    }
+
     if (!activeItem) {
         return (
             <div className="flex-1 flex items-center justify-center">
@@ -184,14 +234,14 @@ export default function Learn() {
             );
             break;
 
-        case "challenge":
-            content = (
-                <ChallengeView
-                    item={activeItem}
-                    onMarkComplete={onMarkComplete}
-                />
-            );
-            break;
+        // case "challenge":
+        //     content = (
+        //         <ChallengeView
+        //             item={activeItem}
+        //             onMarkComplete={onMarkComplete}
+        //         />
+        //     );
+        //     break;
 
         // case "quiz":
         //     content = (

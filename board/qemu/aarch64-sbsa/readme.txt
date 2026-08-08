@@ -17,7 +17,7 @@ Run the emulation with:
 
   qemu-system-aarch64 \
     -M sbsa-ref \
-    -cpu neoverse-n2 \
+    -cpu neoverse-n1 \
     -smp 4 \
     -m 1024 \
     -nographic \

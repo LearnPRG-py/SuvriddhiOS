@@ -4,9 +4,8 @@
 #
 ################################################################################
 
-LIBXMLB_VERSION = 0.3.27
-LIBXMLB_SITE = https://github.com/hughsie/libxmlb/releases/download/$(LIBXMLB_VERSION)
-LIBXMLB_SOURCE = libxmlb-$(LIBXMLB_VERSION).tar.xz
+LIBXMLB_VERSION = 0.3.19
+LIBXMLB_SITE = $(call github,hughsie,libxmlb,$(LIBXMLB_VERSION))
 LIBXMLB_LICENSE = LGPL-2.1+
 LIBXMLB_LICENSE_FILES = LICENSE
 LIBXMLB_INSTALL_STAGING = YES

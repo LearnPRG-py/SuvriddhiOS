@@ -37,10 +37,15 @@ fi
 
 echo "Relocating the buildroot SDK from ${OLDPATH} to ${NEWPATH} ..."
 
+# Make sure file uses the right language
+export LC_ALL=C
 # Replace the old path with the new one in all text files
-while read -r FILE ; do
-    sed -i "s|${OLDPATH}|${NEWPATH}|g" "${FILE}"
-done < share/buildroot/sdk-relocs
+grep -lr "${OLDPATH}" . | while read -r FILE ; do
+    if file -b --mime-type "${FILE}" | grep -q '^text/' && [ "${FILE}" != "${LOCFILE}" ]
+    then
+        sed -i "s|${OLDPATH}|${NEWPATH}|g" "${FILE}"
+    fi
+done
 
 # At the very end, we update the location file to not break the
 # SDK if this script gets interruted.

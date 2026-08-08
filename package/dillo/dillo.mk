@@ -4,19 +4,22 @@
 #
 ################################################################################
 
-DILLO_VERSION = 3.3.0
-DILLO_SITE = https://dillo-browser.org/release/$(DILLO_VERSION)
+DILLO_VERSION = 3.0.5
+DILLO_SOURCE = dillo-$(DILLO_VERSION).tar.bz2
+DILLO_SITE = https://github.com/dillo-browser/dillo/releases/download/v$(DILLO_VERSION)
 DILLO_LICENSE = GPL-3.0+
 DILLO_LICENSE_FILES = COPYING
+# configure.ac gets patched, so autoreconf is necessary
+DILLO_AUTORECONF = YES
 DILLO_DEPENDENCIES = fltk zlib \
 	$(if $(BR2_PACKAGE_LIBICONV),libiconv)
 DILLO_CONF_ENV = ac_cv_path_FLTK_CONFIG=$(STAGING_DIR)/usr/bin/fltk-config
 
 ifeq ($(BR2_PACKAGE_OPENSSL),y)
-DILLO_CONF_OPTS += --enable-tls
+DILLO_CONF_OPTS += --enable-ssl
 DILLO_DEPENDENCIES += openssl
 else
-DILLO_CONF_OPTS += --disable-tls
+DILLO_CONF_OPTS += --disable-ssl
 endif
 
 ifeq ($(BR2_PACKAGE_LIBPNG),y)

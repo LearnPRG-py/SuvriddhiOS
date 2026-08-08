@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-LIBSEPOL_VERSION = 3.10
+LIBSEPOL_VERSION = 3.8.1
 LIBSEPOL_SITE = https://github.com/SELinuxProject/selinux/releases/download/$(LIBSEPOL_VERSION)
 LIBSEPOL_LICENSE = LGPL-2.1+
 LIBSEPOL_LICENSE_FILES = LICENSE
@@ -17,7 +17,7 @@ HOST_LIBSEPOL_DEPENDENCIES = $(BR2_COREUTILS_HOST_DEPENDENCY) host-flex
 LIBSEPOL_MAKE_FLAGS = $(TARGET_CONFIGURE_OPTS)
 
 ifeq ($(BR2_STATIC_LIBS),y)
-LIBSEPOL_MAKE_FLAGS += DISABLE_SHARED=y
+LIBSEPOL_MAKE_FLAGS += STATIC=1
 endif
 
 define LIBSEPOL_BUILD_CMDS

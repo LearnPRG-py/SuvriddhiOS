@@ -211,13 +211,11 @@ class PodmanBase(infra.basetest.BRTest):
         self.assertEqual(len(img_info), 0, f"{len(img_info)} image(s) still present, expecting 0")
 
 
-# gitlab-runner: xlarge
 class TestPodmanIptables(PodmanBase):
     def test_run(self):
         self.do_test()
 
 
-# gitlab-runner: xlarge
 class TestPodmanNftables(PodmanBase):
     config = PodmanBase.config + """
     BR2_PACKAGE_NFTABLES=y
@@ -227,7 +225,6 @@ class TestPodmanNftables(PodmanBase):
         self.do_test()
 
 
-# gitlab-runner: xlarge
 class TestPodmanTini(PodmanBase):
     config = PodmanBase.config + """
     BR2_PACKAGE_PODMAN_INIT_TINI=y
@@ -237,7 +234,6 @@ class TestPodmanTini(PodmanBase):
         self.do_test()
 
 
-# gitlab-runner: xlarge
 class TestPodmanSlirpIptables(PodmanBase):
     config = PodmanBase.config + """
     BR2_PACKAGE_PODMAN_NET_SLIRP4NETNS=y
@@ -247,7 +243,6 @@ class TestPodmanSlirpIptables(PodmanBase):
         self.do_test()
 
 
-# gitlab-runner: xlarge
 class TestPodmanSlirpNftables(PodmanBase):
     config = PodmanBase.config + """
     BR2_PACKAGE_NFTABLES=y

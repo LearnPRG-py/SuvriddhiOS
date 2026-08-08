@@ -349,7 +349,7 @@
                 "id": "ds_list_comprehensions",
                 "type": "lesson",
                 "title": "List Comprehensions",
-                "contentFile": "topics_py/data_structures/list_comprehensions.html"
+                "contentFile": "topics_py/data_structures/lists_comprehensions.html"
             },
             {
                 "id": "ds_tuples",
@@ -601,17 +601,9 @@
                 "id": "err_quiz",
                 "type": "quiz",
                 "title": "Quiz: Error Handling Knowledge Check",
-                "contentFile": "topics_py/error_handling/quiz.html",
-                "id": "err_quiz",
-                "type": "quiz",
-                "title": "Quiz: Error Handling Knowledge Check",
                 "contentFile": "topics_py/error_handling/quiz.html"
             },
             {
-                "id": "err_project_contact_book_v2",
-                "type": "project",
-                "title": "Mini-Project: Upgrade Contact Book with File Persistence & Error Handling",
-                "contentFile": "topics_py/error_handling/project_contact_book_v2.html",
                 "id": "err_project_contact_book_v2",
                 "type": "project",
                 "title": "Mini-Project: Upgrade Contact Book with File Persistence & Error Handling",
@@ -867,7 +859,7 @@
                 "id": "int_static_typing",
                 "type": "lesson",
                 "title": "Static Type Checking (mypy conceptually)",
-                "contentFile": "topics_py/intermediate/static_typing.html"
+                "contentFile": "topics_py/intermediate/static_typic.html"
             },
             {
                 "id": "int_namedtuples",

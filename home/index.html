@@ -1,161 +1,442 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Suvriddhi Home</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="offline-banner" id="offlineBanner" style="display: none">
-      <span class="offline-icon">📡</span>
-      <span class="offline-text"
-        >You're offline - Suvriddhi OS will still works, but external sites and
-        icons won't load until you're back online.</span
-      >
-    </div>
-    <div class="clock">
-      <span class="date">Thu 9 Jul</span>
-      <span class="time">12:41</span>
-    </div>
-    <div class="app-cards">
-      <a href="http://127.0.0.1:8082" class="app-card pcm">
-        <span class="app-icon">💎</span>
-        <span class="app-label">Learn</span>
-        <span class="app-arrow">←</span>
-      </a>
-      <a href="http://127.0.0.1:8081" class="app-card">
-        <span class="app-icon">💻</span>
-        <span class="app-label">Build</span>
-        <span class="app-arrow">→</span>
-      </a>
-    </div>
-    <div class="searchcontainer">
-      <div class="searchbar">
-        <input
-          type="text"
-          class="search-input"
-          placeholder="Search for anything."
-        />
-      </div>
-      <button class="search-icon" id="searchBtn">🔍</button>
-    </div>
-    <div class="dock">
-      <div class="dock-row">
-        <a href="https://www.khanacademy.org" class="dock-item" target="_blank">
-          <img
-            src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/khanacademy.svg"
-            class="dock-icon-svg"
-            alt=""
-          />
-          <span class="dock-label">Khan Academy</span>
-        </a>
-        <a href="https://ncert.nic.in" class="dock-item" target="_blank">
-          <span class="dock-icon-emoji">📘</span>
-          <span class="dock-label">NCERT</span>
-        </a>
-        <a href="http://127.0.0.1:8082" class="dock-item" target="_blank">
-          <span class="dock-icon-emoji">⚛️</span>
-          <span class="dock-label">Quark</span>
-        </a>
-        <a href="https://www.youtube.com" class="dock-item" target="_blank">
-          <img
-            src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/youtube.svg"
-            class="dock-icon-svg"
-            alt=""
-          />
-          <span class="dock-label">YouTube</span>
-        </a>
-        <a href="https://www.wikipedia.org" class="dock-item" target="_blank">
-          <img
-            src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/wikipedia.svg"
-            class="dock-icon-svg"
-            alt=""
-          />
-          <span class="dock-label">Wikipedia</span>
-        </a>
-        <a href="https://www.desmos.com" class="dock-item" target="_blank">
-          <span class="dock-icon-emoji">📈</span>
-          <span class="dock-label">Desmos</span>
-        </a>
-        <a href="https://phet.colorado.edu" class="dock-item" target="_blank">
-          <span class="dock-icon-emoji">🔬</span>
-          <span class="dock-label">PhET</span>
-        </a>
-      </div>
-      <div class="dock-row">
-        <a href="https://github.com" class="dock-item" target="_blank">
-          <img
-            src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/github.svg"
-            class="dock-icon-svg"
-            alt=""
-          />
-          <span class="dock-label">GitHub</span>
-        </a>
-        <a href="https://www.w3schools.com" class="dock-item" target="_blank">
-          <img
-            src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/w3schools.svg"
-            class="dock-icon-svg"
-            alt=""
-          />
-          <span class="dock-label">W3Schools</span>
-        </a>
-        <a href="https://mail.google.com" class="dock-item" target="_blank">
-          <img
-            src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/gmail.svg"
-            class="dock-icon-svg"
-            alt=""
-          />
-          <span class="dock-label">Gmail</span>
-        </a>
-        <a href="https://docs.google.com" class="dock-item" target="_blank">
-          <img
-            src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/googledocs.svg"
-            class="dock-icon-svg"
-            alt=""
-          />
-          <span class="dock-label">Google Docs</span>
-        </a>
-        <a href="https://gemini.google.com" class="dock-item" target="_blank">
-          <span class="dock-icon-emoji">✨</span>
-          <span class="dock-label">Gemini</span>
-        </a>
-        <a href="https://chat.openai.com" class="dock-item" target="_blank">
-          <img
-            src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/openai.svg"
-            class="dock-icon-svg"
-            alt=""
-          />
-          <span class="dock-label">ChatGPT</span>
-        </a>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Suvriddhi Home</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <div class="offline-banner" id="offlineBanner" style="display: none">
+            <span class="offline-icon" aria-hidden="true">
+                <svg
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    height="1em"
+                    fill="none"
+                    stroke="white"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <path d="M5 12.5a10 10 0 0 1 14 0" />
+                    <path d="M8.5 16a5 5 0 0 1 7 0" />
+                    <line x1="12" y1="20" x2="12.01" y2="20" />
+                    <line x1="2" y1="2" x2="22" y2="22" />
+                </svg>
+            </span>
+            <span class="offline-text"
+                >You're offline - Suvriddhi OS will still works, but external
+                sites and icons won't load until you're back online.</span
+            >
+        </div>
+        <div class="clock">
+            <span class="date">Thu 9 Jul</span>
+            <span class="time">12:41</span>
+        </div>
+        <div class="app-cards">
+            <a href="http://127.0.0.1:8082" class="app-card pcm">
+                <span class="app-icon" aria-hidden="true">
+                    <svg
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        height="1em"
+                        fill="none"
+                        stroke="Blue"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path d="M6 3h12l4 6-10 12L2 9Z" />
+                        <path d="M11 3 8 9l4 12 4-12-3-6" />
+                        <path d="M2 9h20" />
+                    </svg>
+                </span>
+                <span class="app-label">Learn</span>
+                <span class="app-arrow">←</span>
+            </a>
+            <a href="http://127.0.0.1:8081" class="app-card">
+                <span class="app-icon" aria-hidden="true">
+                    <svg
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        height="1em"
+                        fill="none"
+                        stroke="Green"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <rect x="2" y="4" width="20" height="12" rx="2" />
+                        <line x1="8" y1="20" x2="16" y2="20" />
+                        <line x1="12" y1="16" x2="12" y2="20" />
+                    </svg>
+                </span>
+                <span class="app-label">Build</span>
+                <span class="app-arrow">→</span>
+            </a>
+        </div>
+        <div class="searchcontainer">
+            <div class="searchbar">
+                <input
+                    type="text"
+                    class="search-input"
+                    placeholder="Search for anything."
+                />
+            </div>
+            <button class="search-icon" id="searchBtn" aria-label="Search">
+                <svg
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    height="1em"
+                    fill="none"
+                    stroke="white"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <circle cx="11" cy="11" r="7" />
+                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
+            </button>
+        </div>
+        <div class="dock">
+            <div class="dock-row">
+                <a
+                    href="https://www.khanacademy.org"
+                    class="dock-item"
+                    target="_blank"
+                >
+                    <img
+                        src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/khanacademy.svg"
+                        class="dock-icon-svg"
+                        alt=""
+                    />
+                    <span class="dock-label">Khan Academy</span>
+                </a>
+                <a
+                    href="https://ncert.nic.in"
+                    class="dock-item"
+                    target="_blank"
+                >
+                    <span class="dock-icon-emoji" aria-hidden="true">
+                        <svg
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            height="1em"
+                            fill="none"
+                            stroke="white"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                            <path
+                                d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
+                            />
+                        </svg>
+                    </span>
+                    <span class="dock-label">NCERT</span>
+                </a>
+                <a
+                    href="https://quarklearning.online"
+                    class="dock-item"
+                    target="_blank"
+                >
+                    <span class="dock-icon-emoji" aria-hidden="true">
+                        <svg
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            height="1em"
+                            fill="none"
+                            stroke="white"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <circle
+                                cx="12"
+                                cy="12"
+                                r="1.5"
+                                fill="white"
+                                stroke="none"
+                            />
+                            <ellipse cx="12" cy="12" rx="10" ry="4.2" />
+                            <ellipse
+                                cx="12"
+                                cy="12"
+                                rx="10"
+                                ry="4.2"
+                                transform="rotate(60 12 12)"
+                            />
+                            <ellipse
+                                cx="12"
+                                cy="12"
+                                rx="10"
+                                ry="4.2"
+                                transform="rotate(120 12 12)"
+                            />
+                        </svg>
+                    </span>
+                    <span class="dock-label">Quark</span>
+                </a>
+                <a
+                    href="https://www.youtube.com"
+                    class="dock-item"
+                    target="_blank"
+                >
+                    <img
+                        src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/youtube.svg"
+                        class="dock-icon-svg"
+                        alt=""
+                    />
+                    <span class="dock-label">YouTube</span>
+                </a>
+                <a
+                    href="https://www.wikipedia.org"
+                    class="dock-item"
+                    target="_blank"
+                >
+                    <img
+                        src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/wikipedia.svg"
+                        class="dock-icon-svg"
+                        alt=""
+                    />
+                    <span class="dock-label">Wikipedia</span>
+                </a>
+                <a
+                    href="https://www.desmos.com"
+                    class="dock-item"
+                    target="_blank"
+                >
+                    <span class="dock-icon-emoji" aria-hidden="true">
+                        <svg
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            height="1em"
+                            fill="none"
+                            stroke="white"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <polyline points="3 17 9 9 13 14 21 4" />
+                            <polyline points="15 4 21 4 21 10" />
+                        </svg>
+                    </span>
+                    <span class="dock-label">Desmos</span>
+                </a>
+                <a
+                    href="https://phet.colorado.edu"
+                    class="dock-item"
+                    target="_blank"
+                >
+                    <span class="dock-icon-emoji" aria-hidden="true">
+                        <svg
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            height="1em"
+                            fill="none"
+                            stroke="white"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path d="M9 2h6" />
+                            <path
+                                d="M10 2v6.34a4 4 0 0 1-.7 2.26L5.4 16.5A3 3 0 0 0 7.9 21h8.2a3 3 0 0 0 2.5-4.5l-3.9-5.9A4 4 0 0 1 14 8.34V2"
+                            />
+                            <line x1="7.5" y1="15" x2="16.5" y2="15" />
+                        </svg>
+                    </span>
+                    <span class="dock-label">PhET</span>
+                </a>
+                <a
+                    href="https://www.geogebra.org/calculator"
+                    class="dock-item"
+                    target="_blank"
+                >
+                    <span class="dock-icon-emoji" aria-hidden="true">
+                        <svg
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            height="1em"
+                            fill="none"
+                            stroke="white"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <circle cx="7" cy="7" r="3" />
+                            <circle cx="17" cy="17" r="3" />
+                            <line x1="9.5" y1="9.5" x2="14.5" y2="14.5" />
+                            <line x1="7" y1="10" x2="7" y2="21" />
+                            <line x1="17" y1="3" x2="17" y2="14" />
+                        </svg>
+                    </span>
+                    <span class="dock-label">GeoGebra</span>
+                </a>
+            </div>
+            <div class="dock-row">
+                <a href="https://github.com" class="dock-item" target="_blank">
+                    <img
+                        src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/github.svg"
+                        class="dock-icon-svg"
+                        alt=""
+                    />
+                    <span class="dock-label">GitHub</span>
+                </a>
+                <a
+                    href="https://www.w3schools.com"
+                    class="dock-item"
+                    target="_blank"
+                >
+                    <img
+                        src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/w3schools.svg"
+                        class="dock-icon-svg"
+                        alt=""
+                    />
+                    <span class="dock-label">W3Schools</span>
+                </a>
+                <a
+                    href="https://mail.google.com"
+                    class="dock-item"
+                    target="_blank"
+                >
+                    <img
+                        src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/gmail.svg"
+                        class="dock-icon-svg"
+                        alt=""
+                    />
+                    <span class="dock-label">Gmail</span>
+                </a>
+                <a
+                    href="https://stackedit.io/app"
+                    class="dock-item"
+                    target="_blank"
+                >
+                    <span class="dock-icon-emoji" aria-hidden="true">
+                        <svg
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            height="1em"
+                            fill="none"
+                            stroke="white"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path d="M12 20h9" />
+                            <path
+                                d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"
+                            />
+                        </svg>
+                    </span>
+                    <span class="dock-label">StackEdit</span>
+                </a>
+                <a href="https://claude.ai" class="dock-item" target="_blank">
+                    <img
+                        src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/claude.svg"
+                        class="dock-icon-svg"
+                        alt=""
+                    />
+                    <span class="dock-label">Claude</span>
+                </a>
+                <a
+                    href="https://www.wolframalpha.com"
+                    class="dock-item"
+                    target="_blank"
+                >
+                    <span class="dock-icon-emoji" aria-hidden="true">
+                        <svg
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            height="1em"
+                            fill="none"
+                            stroke="white"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path d="M4 4v6c0 6 4 9 8 10 4-1 8-4 8-10V4" />
+                            <path d="M9 10l3 3 3-6" />
+                        </svg>
+                    </span>
+                    <span class="dock-label">WolframAlpha</span>
+                </a>
+                <a
+                    href="https://gemini.google.com"
+                    class="dock-item"
+                    target="_blank"
+                >
+                    <span class="dock-icon-emoji" aria-hidden="true">
+                        <svg
+                            viewBox="0 0 24 24"
+                            width="1em"
+                            height="1em"
+                            fill="white"
+                        >
+                            <path
+                                d="M12 2c0 5.523 4.477 10 10 10-5.523 0-10 4.477-10 10 0-5.523-4.477-10-10-10 5.523 0 10-4.477 10-10z"
+                            />
+                        </svg>
+                    </span>
+                    <span class="dock-label">Gemini</span>
+                </a>
+                <a
+                    href="https://chat.openai.com"
+                    class="dock-item"
+                    target="_blank"
+                >
+                    <img
+                        src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/openai.svg"
+                        class="dock-icon-svg"
+                        alt=""
+                    />
+                    <span class="dock-label">ChatGPT</span>
+                </a>
+                <a
+                    href="https://translate.google.com"
+                    class="dock-item"
+                    target="_blank"
+                >
+                    <img
+                        src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/googletranslate.svg"
+                        class="dock-icon-svg"
+                        alt=""
+                    />
+                    <span class="dock-label">Google Translate</span>
+                </a>
+            </div>
+        </div>
         <a
-          href="https://translate.google.com"
-          class="dock-item"
-          target="_blank"
-        >
-          <img
-            src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/googletranslate.svg"
-            class="dock-icon-svg"
-            alt=""
-          />
-          <span class="dock-label">Google Translate</span>
-        </a>
-      </div>
-    </div>
-    <a
-      href="http://127.0.0.1:8082/#/settings"
-      class="settings-btn"
-      target="_blank"
-      >⚙️</a
-    >
-    <div class="wallpaper-picker" id="wallpaperPicker">
-      <span class="wp-dot active" data-file="mountain-beach.jpg"></span>
-      <span class="wp-dot" data-file="mountain-view.jpg"></span>
-      <span class="wp-dot" data-file="mountain.jpg"></span>
-      <span class="wp-dot" data-file="river-mountain.jpg"></span>
-      <span class="wp-dot" data-file="sunset-bridge.jpg"></span>
-      <span class="wp-dot" data-file="tokyo-morning.jpg"></span>
-    </div>
-  </body>
-  <script src="script.js"></script>
+            href="http://127.0.0.1:8082/#/settings"
+            class="settings-btn"
+            target="_blank"
+            aria-label="Settings"
+            ><svg
+                viewBox="0 0 24 24"
+                width="1em"
+                height="1em"
+                fill="none"
+                stroke="white"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <circle cx="12" cy="12" r="3" />
+                <path
+                    d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"
+                /></svg
+        ></a>
+        <div class="wallpaper-picker" id="wallpaperPicker">
+            <span class="wp-dot active" data-file="mountain-beach.jpg"></span>
+            <span class="wp-dot" data-file="mountain-view.jpg"></span>
+            <span class="wp-dot" data-file="mountain.jpg"></span>
+            <span class="wp-dot" data-file="river-mountain.jpg"></span>
+            <span class="wp-dot" data-file="sunset-bridge.jpg"></span>
+            <span class="wp-dot" data-file="tokyo-morning.jpg"></span>
+        </div>
+    </body>
+    <script src="script.js"></script>
 </html>

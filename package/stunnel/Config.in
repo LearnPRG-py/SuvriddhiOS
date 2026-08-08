@@ -8,4 +8,4 @@ config BR2_PACKAGE_STUNNEL
 	  Stunnel is a program that wraps any TCP connection with an SSL
 	  connection.
 
-	  https://www.stunnel.org/
+	  http://www.stunnel.org/

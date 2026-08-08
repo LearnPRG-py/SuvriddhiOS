@@ -69,7 +69,8 @@ class TestNftables(infra.basetest.BRTest):
         # A ping to 127.0.0.2 is expected to fail, because our rule is
         # supposed to drop it.
         ping_test_cmd = ping_cmd_prefix + "127.0.0.2"
-        self.assertRunNotOk(ping_test_cmd)
+        _, exit_code = self.emulator.run(ping_test_cmd)
+        self.assertNotEqual(exit_code, 0)
 
         # We completely delete the table. This should also delete the
         # chain and the rule.
@@ -127,7 +128,8 @@ class TestNftablesInit(TestNftables):
         # should allow ping to 127.0.0.1, but not 127.0.0.2.
         ping_cmd_prefix = "ping -c 3 -i 0.5 -W 2 "
         self.assertRunOk(ping_cmd_prefix + "127.0.0.1")
-        self.assertRunNotOk(ping_cmd_prefix + "127.0.0.2")
+        _, exit_code = self.emulator.run(ping_cmd_prefix + "127.0.0.2")
+        self.assertNotEqual(exit_code, 0)
 
         # Stop should flush the rules, ping to both addresses should
         # work now.
@@ -138,4 +140,5 @@ class TestNftablesInit(TestNftables):
         # Start is essentially the same as reload, check that
         # 127.0.0.2 gets blocked again.
         self.assertRunOk("/etc/init.d/S35nftables start")
-        self.assertRunNotOk(ping_cmd_prefix + "127.0.0.2")
+        _, exit_code = self.emulator.run(ping_cmd_prefix + "127.0.0.2")
+        self.assertNotEqual(exit_code, 0)

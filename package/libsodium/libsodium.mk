@@ -4,9 +4,8 @@
 #
 ################################################################################
 
-LIBSODIUM_VERSION = 1.0.22
+LIBSODIUM_VERSION = 1.0.18
 LIBSODIUM_SITE = https://download.libsodium.org/libsodium/releases
-LIBSODIUM_SOURCE = libsodium-$(LIBSODIUM_VERSION).tar.bz2
 LIBSODIUM_LICENSE = ISC
 LIBSODIUM_LICENSE_FILES = LICENSE
 LIBSODIUM_INSTALL_STAGING = YES

@@ -3,7 +3,6 @@ import os
 import infra.basetest
 
 
-# gitlab-runner: xlarge
 class TestDPDK(infra.basetest.BRTest):
     config = \
         """

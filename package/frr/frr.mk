@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-FRR_VERSION = 10.7.0
+FRR_VERSION = 10.3.1
 FRR_SITE = $(call github,FRRouting,frr,frr-$(FRR_VERSION))
 FRR_LICENSE = GPL-2.0+
 FRR_LICENSE_FILES = \
@@ -20,12 +20,12 @@ FRR_LICENSE_FILES = \
 # tools/gcc-plugins/frr-format.[ch] is not enabled by frr's ./configure, so gcc's
 # GPLv3 does not apply
 #	doc/licenses/GPL-3.0
-FRR_CPE_ID_VENDOR = frrouting
-FRR_CPE_ID_PRODUCT = frrouting
+FRR_CPE_ID_VENDOR = linuxfoundation
+FRR_CPE_ID_PRODUCT = free_range_routing
 FRR_AUTORECONF = YES
-FRR_INSTALL_STAGING = YES
 
 FRR_DEPENDENCIES = host-frr readline json-c libyang \
+	protobuf-c \
 	$(if $(BR2_PACKAGE_C_ARES),c-ares) \
 	$(if $(BR2_PACKAGE_LIBXCRYPT),libxcrypt)
 
@@ -41,7 +41,7 @@ FRR_CONF_OPTS = --with-clippy=$(HOST_DIR)/bin/clippy \
 	--with-moduledir=/usr/lib/frr/modules \
 	--enable-configfile-mask=0640 \
 	--enable-logfile-mask=0640 \
-	--enable-multipath=$(BR2_PACKAGE_FRR_MULTIPATH_MAX) \
+	--enable-multipath=256 \
 	--disable-ospfclient \
 	--enable-user=frr \
 	--enable-group=frr \
@@ -89,14 +89,6 @@ else
 FRR_CONF_OPTS += --disable-bfdd
 endif
 
-# Optional protobuf support
-ifeq ($(BR2_PACKAGE_FRR_PROTOBUF),y)
-FRR_DEPENDENCIES += protobuf-c
-FRR_CONF_OPTS += --enable-protobuf
-else
-FRR_CONF_OPTS += --disable-protobuf
-endif
-
 ifeq ($(BR2_TOOLCHAIN_HAS_LIBATOMIC),y)
 FRR_CONF_ENV += LIBS=-latomic
 endif
@@ -129,13 +121,6 @@ endef
 define FRR_INSTALL_INIT_SYSV
 	$(INSTALL) -D -m 755 $(FRR_PKGDIR)/S50frr \
 		$(TARGET_DIR)/etc/init.d/S50frr
-endef
-
-define FRR_INSTALL_INIT_SYSTEMD
-	$(INSTALL) -D -m 644 $(@D)/tools/frr.service \
-		$(TARGET_DIR)/usr/lib/systemd/system/frr.service
-	$(INSTALL) -D -m 644 $(@D)/tools/frr@.service \
-		$(TARGET_DIR)/usr/lib/systemd/system/frr@.service
 endef
 
 $(eval $(autotools-package))

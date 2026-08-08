@@ -46,7 +46,8 @@ class TestIpRoute2(infra.basetest.BRTest):
         for addr in addrs:
             self.assertRunOk(f"{ping_cmd} {addr}")
         # ...but the IP outside is supposed to fail.
-        self.assertRunNotOk(f"{ping_cmd} 127.1.2.3")
+        _, ret = self.emulator.run(f"{ping_cmd} 127.1.2.3")
+        self.assertNotEqual(ret, 0)
 
         # We add a prohibited route.
         self.assertRunOk("ip route add prohibit 127.0.1.0/24")
@@ -56,7 +57,8 @@ class TestIpRoute2(infra.basetest.BRTest):
         # ...while the other IPs expected to fail.
         addrs = ["127.0.1.2", "127.1.2.3"]
         for addr in addrs:
-            self.assertRunNotOk(f"{ping_cmd} {addr}")
+            _, ret = self.emulator.run(f"{ping_cmd} {addr}")
+            self.assertNotEqual(ret, 0)
 
         # We should be able to see our prohibited route.
         out, ret = self.emulator.run("ip route list")

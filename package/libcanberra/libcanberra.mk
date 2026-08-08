@@ -12,12 +12,7 @@ LIBCANBERRA_LICENSE_FILES = LGPL
 LIBCANBERRA_INSTALL_STAGING = YES
 
 LIBCANBERRA_DEPENDENCIES = host-pkgconf libtool libvorbis
-LIBCANBERRA_CONF_OPTS = \
-	--disable-oss \
-	--disable-null \
-	--disable-tdb \
-	--disable-lynx \
-	--disable-gtk
+LIBCANBERRA_CONF_OPTS = --disable-oss --disable-null --disable-tdb --disable-lynx
 
 ifeq ($(BR2_PACKAGE_HAS_UDEV),y)
 LIBCANBERRA_CONF_OPTS += --enable-udev
@@ -45,6 +40,13 @@ LIBCANBERRA_CONF_OPTS += --enable-gstreamer
 LIBCANBERRA_DEPENDENCIES += gstreamer1
 else
 LIBCANBERRA_CONF_OPTS += --disable-gstreamer
+endif
+
+ifeq ($(BR2_PACKAGE_LIBGTK2),y)
+LIBCANBERRA_CONF_OPTS += --enable-gtk
+LIBCANBERRA_DEPENDENCIES += libgtk2
+else
+LIBCANBERRA_CONF_OPTS += --disable-gtk
 endif
 
 ifeq ($(BR2_PACKAGE_LIBGTK3_X11),y)

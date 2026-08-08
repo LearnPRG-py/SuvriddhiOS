@@ -3,4 +3,4 @@ config BR2_PACKAGE_LIBENCA
 	help
 	  Extremely Naive Charset Analyser
 
-	  https://github.com/Project-OSS-Revival/enca
+	  http://cihar.com/software/enca/

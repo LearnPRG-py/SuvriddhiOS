@@ -11,13 +11,13 @@
     </p>
 
     <p>
-      It is a rule inside Python that says:
+      In the standard GIL-enabled CPython build, it is a rule that says:
       <br><br>
       <strong>Only one thread can run Python code at a time.</strong>
     </p>
 
     <p>
-      Even if you create many threads, only one thread runs at any moment.
+      Even if you create many threads, only one thread executes Python bytecode at a time. Blocking I/O can release the GIL, and free-threaded CPython builds can run Python threads in parallel.
     </p>
 
     <div class="callout">

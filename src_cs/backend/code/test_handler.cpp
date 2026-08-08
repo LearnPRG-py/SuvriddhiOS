@@ -13,6 +13,27 @@ std::string TrimTrailingWhitespace(std::string s)
 	size_t end = s.find_last_not_of(whitespaceChars);
 	return (end == std::string::npos) ? "" : s.substr(0, end + 1);
 }
+
+std::string TestInput(const json &test)
+{
+	const auto input = test.find("input");
+	if (input == test.end())
+		return "";
+	if (input->is_string())
+		return input->get<std::string>();
+	if (input->is_array()) {
+		std::string result;
+		for (const auto &line : *input) {
+			if (!line.is_string())
+				return "";
+			if (!result.empty())
+				result += '\n';
+			result += line.get<std::string>();
+		}
+		return result;
+	}
+	return "";
+}
 } // namespace
 
 json RunTests(json tests, std::string token, Language lang)
@@ -44,19 +65,18 @@ json RunTests(json tests, std::string token, Language lang)
 		}
 	} else {
 		for (auto &t : tests) {
-			std::string input = TrimTrailingWhitespace(t.value("input", ""));
+			std::string input = TrimTrailingWhitespace(TestInput(t));
 			std::string expected = TrimTrailingWhitespace(t.value("expected", ""));
 			lastInput = input;
 			lastExpected = expected;
 			std::string tmpIn = "/tmp/" + token + ".in";
 			WriteFile(tmpIn, input);
-			WriteFile(tmp_out, "");
 			std::string runCmd;
-			// TODO: Add timeout back after buildroot changes.
+
 			if (lang == Language::kPython) {
-				runCmd = "python3 \"" + exePath + "\" < \"" + tmpIn + "\" > \"" + tmp_out + "\" 2>&1";
+				runCmd = "timeout 5s python3 \"" + exePath + "\" < \"" + tmpIn + "\" > \"" + tmp_out + "\" 2>&1";
 			} else {
-				runCmd = "\"" + exePath + "\" < \"" + tmpIn + "\" > \"" + tmp_out + "\" 2>&1";
+				runCmd = "timeout 5s \"" + exePath + "\" < \"" + tmpIn + "\" > \"" + tmp_out + "\" 2>&1";
 			}
 
 			int ret = std::system(runCmd.c_str());
@@ -80,33 +100,21 @@ json RunTests(json tests, std::string token, Language lang)
 				while (!output.empty() && (output.back() == '\n' || output.back() == '\r')) {
 					output.pop_back();
 				}
-
 				while (!expected.empty() && (expected.back() == '\n' || expected.back() == '\r')) {
 					expected.pop_back();
 				}
-
 				if (output != expected) {
 					success = false;
 					err = "Output is wrong";
 					break;
 				}
-			}
-
-			//
-			// OUTPUT CONTAINS
-			//
-			else if (type == "output_contains") {
+			} else if (type == "output_contains") {
 				if (output.find(expected) == std::string::npos) {
 					success = false;
 					err = "Expected text not found";
 					break;
 				}
-			}
-
-			//
-			// CODE CONTAINS
-			//
-			else if (type == "code_contains") {
+			} else if (type == "code_contains") {
 				std::string code = ReadFile(exePath);
 
 				if (code.find(expected) == std::string::npos) {
@@ -114,12 +122,7 @@ json RunTests(json tests, std::string token, Language lang)
 					err = "Required code was not found";
 					break;
 				}
-			}
-
-			//
-			// CODE NOT CONTAINS
-			//
-			else if (type == "code_not_contains") {
+			} else if (type == "code_not_contains") {
 				std::string code = ReadFile(exePath);
 
 				if (code.find(expected) != std::string::npos) {
@@ -127,9 +130,7 @@ json RunTests(json tests, std::string token, Language lang)
 					err = "Forbidden code was found";
 					break;
 				}
-			}
-
-			else {
+			} else {
 				success = false;
 				err = "Unknown test type: " + type;
 				break;

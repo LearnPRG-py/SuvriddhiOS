@@ -27,7 +27,8 @@ class TestSWIPL(infra.basetest.BRTest):
 
         # Check swipl fails when goal is false.
         cmd = "swipl -g false"
-        self.assertRunNotOk(cmd)
+        _, exit_code = self.emulator.run(cmd)
+        self.assertNotEqual(exit_code, 0)
 
         # Test output.
         string = "Hello Buildroot !"

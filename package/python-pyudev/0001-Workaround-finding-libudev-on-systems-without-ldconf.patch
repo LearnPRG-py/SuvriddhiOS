@@ -15,8 +15,6 @@ Signed-off-by: Yegor Yefremov <yegorslists@googlemail.com>
 Signed-off-by: Marcin Niestroj <m.niestroj@grinn-global.com>
 [Fabrice: Use %-formatting instead of f-string for python 2]
 Signed-off-by: Fabrice Fontaine <fontaine.fabrice@gmail.com>
-[Bernd: rebased for version 0.24.4]
-Signed-off-by: Bernd Kuhls <bernd@kuhls.net>
 ---
  src/pyudev/_ctypeslib/utils.py | 8 ++++----
  1 file changed, 4 insertions(+), 4 deletions(-)
@@ -25,7 +23,7 @@ diff --git a/src/pyudev/_ctypeslib/utils.py b/src/pyudev/_ctypeslib/utils.py
 index 9dffb3c..aa9942f 100644
 --- a/src/pyudev/_ctypeslib/utils.py
 +++ b/src/pyudev/_ctypeslib/utils.py
-@@ -24,7 +24,7 @@
+@@ -28,7 +28,7 @@
  """
  
  # isort: STDLIB
@@ -34,7 +32,7 @@ index 9dffb3c..aa9942f 100644
  from ctypes.util import find_library
  
  
-@@ -46,10 +46,10 @@ def load_ctypes_library(name, signatures, error_checkers):
+@@ -50,10 +50,10 @@ def load_ctypes_library(name, signatures, error_checkers):
      :rtype: ctypes.CDLL
      :raises ImportError: if the library is not found
      """
@@ -43,7 +41,7 @@ index 9dffb3c..aa9942f 100644
 +    try:
 +        lib = cdll.LoadLibrary('lib%s.so' % name)
 +    except OSError:
-         raise ImportError(f"No library named {name}")
+         raise ImportError("No library named %s" % name)
 -    lib = CDLL(library_name, use_errno=True)
      # Add function signatures
      for funcname, signature in signatures.items():

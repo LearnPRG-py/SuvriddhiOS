@@ -20,6 +20,7 @@ output/images
 ├── rk3399-rockpro64.dtb
 ├── rootfs.ext2
 ├── rootfs.ext4 -> rootfs.ext2
+├── rootfs.tar
 ├── sdcard.img
 ├── u-boot.bin
 └── u-boot.itb

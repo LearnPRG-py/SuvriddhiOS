@@ -3,7 +3,6 @@ import os
 import infra.basetest
 
 
-# gitlab-runner: xlarge
 class TestMariaDB(infra.basetest.BRTest):
     # We use a specific configuration for:
     # - using Aarch64, to have more than 256MB memory,
@@ -179,7 +178,8 @@ class TestMariaDB(infra.basetest.BRTest):
         self.assertRunOk("/etc/init.d/S97mysqld stop")
 
         # Check the server is stopped.
-        self.assertRunNotOk("mariadb-admin ping")
+        _, exit_code = self.emulator.run("mariadb-admin ping")
+        self.assertNotEqual(exit_code, 0)
 
         # Restart the server.
         self.assertRunOk("/etc/init.d/S97mysqld start")

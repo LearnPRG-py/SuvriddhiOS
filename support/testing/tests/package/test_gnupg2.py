@@ -49,7 +49,8 @@ class TestGnupg2(infra.basetest.BRTest):
         # Test a failed decrypt with a bad password
         cmd = "gpg --batch --decrypt"
         cmd += " --passphrase 'A-Bad-Password' {}".format(gpg_file)
-        self.assertRunNotOk(cmd)
+        _, exit_code = self.emulator.run(cmd)
+        self.assertNotEqual(exit_code, 0)
 
         # Test the generation of an asymmetric key
         cmd = "gpg --batch --passphrase ''"
@@ -105,7 +106,9 @@ class TestGnupg2(infra.basetest.BRTest):
         self.assertRunOk(cmd)
 
         cmd = "gpg --verify {}".format(sig_file)
-        self.assertRunNotOk(cmd)
+        _, exit_code = self.emulator.run(cmd)
+        self.assertNotEqual(exit_code, 0)
 
         cmd = "gpg --armor --verify {}".format(asc_file)
-        self.assertRunNotOk(cmd)
+        _, exit_code = self.emulator.run(cmd)
+        self.assertNotEqual(exit_code, 0)

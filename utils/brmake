@@ -12,8 +12,7 @@ main() {
              printf "%(%Y-%m-%dT%H:%M:%S)T %s\n" -1 "${line}"
          done \
          |tee -a br.log \
-         |grep --line-buffered --colour=never -E '>>>' \
-         |sed --unbuffered -E 's/^([0-9T:-]{19}) [[:print:]]*(.*>>> )/\1 \2/'
+         |grep --colour=never -E '>>>'
        )
     ret=${?}
 

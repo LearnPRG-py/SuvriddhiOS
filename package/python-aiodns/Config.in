@@ -4,4 +4,4 @@ config BR2_PACKAGE_PYTHON_AIODNS
 	help
 	  Simple DNS resolver for asyncio.
 
-	  https://github.com/saghul/aiodns
+	  http://github.com/saghul/aiodns

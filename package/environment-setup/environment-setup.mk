@@ -4,8 +4,6 @@
 #
 ################################################################################
 
-ENVIRONMENT_SETUP_LICENSE = GPL-2.0-or-later
-
 ENVIRONMENT_SETUP_FILE = $(HOST_DIR)/environment-setup
 
 define HOST_ENVIRONMENT_SETUP_INSTALL_CMDS

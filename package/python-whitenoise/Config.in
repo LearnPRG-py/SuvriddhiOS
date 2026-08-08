@@ -1,7 +1,0 @@
-config BR2_PACKAGE_PYTHON_WHITENOISE
-	bool "python-whitenoise"
-	help
-	  Radically simplified static file serving for WSGI
-	  applications.
-
-	  https://github.com/evansd/whitenoise
