@@ -71,6 +71,7 @@ json RunTests(json tests, std::string token, Language lang)
 			lastExpected = expected;
 			std::string tmpIn = "/tmp/" + token + ".in";
 			WriteFile(tmpIn, input);
+			WriteFile(tmp_out, "");
 			std::string runCmd;
 
 			if (lang == Language::kPython) {
