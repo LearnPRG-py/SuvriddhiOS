@@ -128,7 +128,11 @@ export default function Settings() {
 
                 {status === "updating" && (
                     <p className="text-slate-400 text-sm px-2 pt-2">
-                        Starting system update...
+                        Update has successfully started! You may continue using
+                        suvriddhi OS and wait until the restart in ~10 minutes.
+                        Do not turn off the device until it does automatically
+                        unless it has been more than 20 minutes, in which case
+                        you may turn it off.
                     </p>
                 )}
                 {status === "error" && (
