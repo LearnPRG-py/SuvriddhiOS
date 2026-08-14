@@ -74,19 +74,20 @@ json RunTests(json tests, std::string token, Language lang)
 			WriteFile(tmp_out, "");
 			std::string runCmd;
 
+			// TODO: Add timeout from the JS end.
 			if (lang == Language::kPython) {
-				runCmd = "timeout 5s python3 \"" + exePath + "\" < \"" + tmpIn + "\" > \"" + tmp_out + "\" 2>&1";
+				runCmd = "python3 \"" + exePath + "\" < \"" + tmpIn + "\" > \"" + tmp_out + "\" 2>&1";
 			} else {
-				runCmd = "timeout 5s \"" + exePath + "\" < \"" + tmpIn + "\" > \"" + tmp_out + "\" 2>&1";
+				runCmd = "\"" + exePath + "\" < \"" + tmpIn + "\" > \"" + tmp_out + "\" 2>&1";
 			}
 
 			int ret = std::system(runCmd.c_str());
 
-			if (WEXITSTATUS(ret) == 124) {
-				success = false;
-				err = "Process timed out!";
-				break;
-			}
+			// if (WEXITSTATUS(ret) == 124) {
+			// 	success = false;
+			// 	err = "Process timed out!";
+			// 	break;
+			// }
 
 			if (ret != 0) {
 				success = false;
