@@ -1,9 +1,37 @@
-# Navigating a ~2.3M-Line Repo
+# Navigating a ~8.4Million Line Repo
 
 The repo is large, but almost none of that size is SuvriddhiOS-specific
 code. This doc tells you what to actually pay attention to, and gives
 some general tips for growing your understanding of the codebase over
 time.
+
+## The story behind the lines of code
+
+Running `wc -l` over every git-tracked file in the repo gives **8.3M**
+lines. That number is real, but it's almost meaningless as a measure of
+"how much code is here" — `wc -l` doesn't know binary from text, so it
+happily counts `0x0A` bytes inside compiled binaries, WASM blobs, and
+video files as if they were lines of source. Here's where it actually
+comes from:
+
+| Layer | Raw "lines" | What it really is |
+|---|---|---|
+| Upstream Buildroot (`package/`, `boot/`, `linux/`, `toolchain/`, `fs/`, `arch/`, `system/`, `support/`, `utils/`, legacy configs) | ≈972K | Vendored, ~3,000-package upstream tree — see the section below |
+| `src_phy`'s Unity WebGL simulation content | ≈857K | 41 physics/chem/maths simulations, each shipping its own copy of Unity's compiled engine (`Build/*.wasm`, `*.data`, `*.framework.js`) plus course videos (`Vids/*.mp4`) — **binary and generated output, not source**, and the Unity runtime is duplicated per-topic rather than shared |
+| `src_cs/backend/libs/json.hpp` | 25.5K | Vendored [nlohmann/json](https://github.com/nlohmann/json) single-header library — one file, not written for this project |
+| Everything else (`configs/`, `board/raspberrypi/`, `src_cs/`, `src_phy/` app code, `suvriddhi_docs/`) | **≈95K** | **The actual SuvriddhiOS-authored codebase** |
+
+That last row — **~95,000 lines** — is the number that matters if
+you're asking "how much is there for a contributor to actually
+understand." It splits roughly as:
+
+| Directory | Lines | Files |
+|---|---|---|
+| `configs/` | 410 | 4 |
+| `board/raspberrypi/` | ~1K | 30 |
+| `src_cs/` (app + backend, excluding vendored `json.hpp`/binaries) | ~48K | 245 |
+| `src_phy/` (app, excluding Unity/video blobs) | ~44K | 192 |
+| `suvriddhi_docs/` | ~1.5K | 9 |
 
 ## What's "ours" vs. upstream Buildroot
 
