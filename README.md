@@ -12,7 +12,7 @@ which means changes here have real consequences for real classrooms —
 read [suvriddhi_docs/08-contribution-guidelines.md](./suvriddhi_docs/08-contribution-guidelines.md)
 before you open a PR.
 
-This repo is a fork of [Buildroot](https://buildroot.org/) (~2.3M lines
+This repo is a fork of [Buildroot](https://buildroot.org/) (Now ~8.4M lines
 total) with SuvriddhiOS-specific additions layered on top. Almost all of
 that line count is vendored Buildroot package infrastructure and headers
 you will never touch — see
