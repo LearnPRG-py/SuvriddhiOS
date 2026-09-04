@@ -17,7 +17,7 @@ comes from:
 | Layer | Raw "lines" | What it really is |
 |---|---|---|
 | Upstream Buildroot (`package/`, `boot/`, `linux/`, `toolchain/`, `fs/`, `arch/`, `system/`, `support/`, `utils/`, legacy configs) | ≈972K | Vendored, ~3,000-package upstream tree — see the section below |
-| `src_phy`'s Unity WebGL simulation content | ≈857K | 41 physics/chem/maths simulations, each shipping its own copy of Unity's compiled engine (`Build/*.wasm`, `*.data`, `*.framework.js`) plus course videos (`Vids/*.mp4`) — **binary and generated output, not source**, and the Unity runtime is duplicated per-topic rather than shared |
+| `src_phy`'s Unity WebGL simulation content | ≈857K | 41 physics/chem/maths simulations, each shipping its own copy of Unity's compiled engine (`Build/*.wasm`, `*.data`, `*.framework.js`) plus course videos (`Vids/*.mp4`) — **binary and generated output, not source** |
 | `src_cs/backend/libs/json.hpp` | 25.5K | Vendored [nlohmann/json](https://github.com/nlohmann/json) single-header library — one file, not written for this project |
 | Everything else (`configs/`, `board/raspberrypi/`, `src_cs/`, `src_phy/` app code, `suvriddhi_docs/`) | **≈95K** | **The actual SuvriddhiOS-authored codebase** |
 
