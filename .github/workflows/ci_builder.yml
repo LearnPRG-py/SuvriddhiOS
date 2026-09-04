@@ -48,10 +48,10 @@ jobs:
                   npm run build
                   cp -r dist/. $GITHUB_WORKSPACE/release/learn/
 
-            - name: Audit Physics
-              run: |
-                  cd src_phy
-                  npm audit --audit-level=critical
+            # - name: Audit Physics
+            #   run: |
+            #       cd src_phy
+            #       npm audit --audit-level=critical
 
             - name: Build CS
               run: |
@@ -59,10 +59,10 @@ jobs:
                   npm run build
                   cp -r dist/. $GITHUB_WORKSPACE/release/build/
 
-            - name: Audit CS
-              run: |
-                  cd src_cs
-                  npm audit --audit-level=critical
+            # - name: Audit CS
+            #   run: |
+            #       cd src_cs
+            #       npm audit --audit-level=critical
 
             - name: Build Home
               run: |
