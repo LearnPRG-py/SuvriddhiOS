@@ -9,16 +9,15 @@ interface LessonViewProps {
     onMarkComplete: () => void;
 }
 
-// ── Physics: one build per level ─────────────────────────────────────────────
-
 function isUnityLesson(contentFile: string) {
     return /G\d+\/index\.html$/.test(contentFile);
 }
 
 function UnityPhysicsLesson({ contentFile }: { contentFile: string }) {
     const parts = contentFile.split("/");
-    const buildName = parts[1];
-    const base = `/data/${parts[0]}/${buildName}/`;
+    const buildName = parts[2];
+    const base = `/data/${parts[0]}/${parts[1]}/${buildName}/`;
+    console.log(base);
 
     const { unityProvider } = useUnityContext({
         loaderUrl: `${base}Build/${buildName}.loader.js`,
