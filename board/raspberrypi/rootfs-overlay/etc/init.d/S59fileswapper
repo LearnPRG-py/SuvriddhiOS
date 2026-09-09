@@ -1,0 +1,25 @@
+#!/bin/sh
+
+if [ ! -d "/root/www/wallpapers" ]; then
+    mv "/root/www.old/wallpapers" "/root/www/"
+fi
+
+mkdir -p "/root/www.old/learn/data/topics/Unity"
+
+if [ -d "/root/www.old/learn/data/topics/G01" ]; then
+    mv /root/www.old/learn/data/topics/G* "/root/www.old/learn/data/topics/Unity"
+fi
+
+if [ ! -d "/root/www/learn/data/topics/Unity" ]; then
+    mv "/root/www.old/learn/data/topics/Unity" "/root/www/learn/data/topics/"
+fi
+
+if [ ! -d "/root/www/learn/data/topics_math/Build" ]; then
+    mv "/root/www.old/learn/data/topics_math/Build" "/root/www/learn/data/topics_math/"
+fi
+
+if [ ! -d "/root/www/learn/data/topics_math/Vids" ]; then
+    mv "/root/www.old/learn/data/topics_math/Vids" "/root/www/learn/data/topics_math/"
+fi
+
+# This should correctly restore us the update package.
