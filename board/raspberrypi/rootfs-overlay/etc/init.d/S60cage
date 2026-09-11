@@ -7,6 +7,31 @@ start() {
     chmod 0700 $XDG_RUNTIME_DIR $CHROME_DATA_DIR
     export LD_LIBRARY_PATH=/usr/lib/chromium-browser:$LD_LIBRARY_PATH
 
+    if [ ! -d "/root/www/wallpapers" ] && [ -d "/root/www.old/wallpapers" ]; then
+        mv "/root/www.old/wallpapers" "/root/www/" 2>/dev/null || true
+    fi
+
+    if [ -d "/root/www.old/learn/data/topics/G01" ]; then
+        mkdir -p "/root/www.old/learn/data/topics/Unity"
+        for dir in /root/www.old/learn/data/topics/G*; do
+            if [ -d "$dir" ]; then
+                mv "$dir" "/root/www.old/learn/data/topics/Unity/" 2>/dev/null || true
+            fi
+        done
+    fi
+
+    if [ ! -d "/root/www/learn/data/topics/Unity" ] && [ -d "/root/www.old/learn/data/topics/Unity" ]; then
+        mv "/root/www.old/learn/data/topics/Unity" "/root/www/learn/data/topics/" 2>/dev/null || true
+    fi
+
+    if [ ! -d "/root/www/learn/data/topics_math/Build" ] && [ -d "/root/www.old/learn/data/topics_math/Build" ]; then
+        mv "/root/www.old/learn/data/topics_math/Build" "/root/www/learn/data/topics_math/" 2>/dev/null || true
+    fi
+
+    if [ ! -d "/root/www/learn/data/topics_math/Vids" ] && [ -d "/root/www.old/learn/data/topics_math/Vids" ]; then
+        mv "/root/www.old/learn/data/topics_math/Vids" "/root/www/learn/data/topics_math/" 2>/dev/null || true
+    fi
+
     (
     echo "Starting network setup..."
     sleep 1
