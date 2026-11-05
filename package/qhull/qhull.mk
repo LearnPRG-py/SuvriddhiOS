@@ -25,4 +25,6 @@ else ifeq ($(BR2_SHARED_LIBS),y)
 QHULL_CONF_OPTS += -DBUILD_STATIC_LIBS=OFF
 endif
 
+QHULL_CONF_OPTS += -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+
 $(eval $(cmake-package))
