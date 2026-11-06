@@ -23,3 +23,4 @@ exec /usr/lib/chromium-browser/chromium-browser \
     --load-extension=/root/uBlock_extn \
     --load-extension=/root/h264ify \
     http://127.0.0.1:8080
+    
