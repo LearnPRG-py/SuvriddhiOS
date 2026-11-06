@@ -26,6 +26,7 @@ echo "BCM43455 firmware installed."
 ls -lh "$FIRMWARE_DIR"/brcmfmac43455-sdio.*
 
 cp -r ${TARGET_DIR}/../../uBlock_extn ${TARGET_DIR}/root/uBlock_extn
+cp -r ${TARGET_DIR}/../../h264ify ${TARGET_DIR}/root/h264ify
 
 # Write scripts here
 
