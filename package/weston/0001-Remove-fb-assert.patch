@@ -1,0 +1,31 @@
+--- a/libweston/backend-drm/state-propose.c
++++ b/libweston/backend-drm/state-propose.c
+@@ -521,7 +521,6 @@
+ 			assert(plane == output->cursor_plane);
+ 			break;
+ 		case WDRM_PLANE_TYPE_PRIMARY:
+-			assert(fb);
+ 			if (plane != output->scanout_plane)
+ 				continue;
+ 			if (mode != DRM_OUTPUT_PROPOSE_STATE_PLANES_ONLY)
+@@ -530,7 +529,6 @@
+ 				continue;
+ 			break;
+ 		case WDRM_PLANE_TYPE_OVERLAY:
+-			assert(fb);
+ 			assert(mode != DRM_OUTPUT_PROPOSE_STATE_RENDERER_ONLY);
+ 			/* if the view covers the whole output, put it in the
+ 			 * scanout plane, not overlay */
+@@ -620,9 +618,10 @@
+ 		if (plane->type == WDRM_PLANE_TYPE_CURSOR) {
+ 			ps = drm_output_prepare_cursor_paint_node(state, pnode, zpos);
+ 		} else {
++                    if (fb)
+ 			ps = drm_output_try_paint_node_on_plane(plane, state,
+-								pnode, mode,
+-								fb, zpos);
++		          		    pnode, mode,
++					    fb, zpos);
+ 		}
+ 
+ 		if (ps) {
