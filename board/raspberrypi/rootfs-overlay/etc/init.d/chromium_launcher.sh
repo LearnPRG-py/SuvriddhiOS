@@ -1,3 +1,4 @@
+#!/bin/sh
 export CHROME_DATA_DIR=/root/chromium-data
 
 exec /usr/lib/chromium-browser/chromium-browser \
@@ -20,7 +21,5 @@ exec /usr/lib/chromium-browser/chromium-browser \
     --ignore-gpu-blocklist \
     --enable-features=VaapiVideoDecoder \
     --enable-accelerated-video-decode \
-    --load-extension=/root/uBlock_extn \
-    --load-extension=/root/h264ify \
+    --load-extension="/root/uBlock_extn,/root/h264ify" \
     http://127.0.0.1:8080
-    
